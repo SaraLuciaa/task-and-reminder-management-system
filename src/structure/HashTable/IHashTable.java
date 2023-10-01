@@ -1,4 +1,4 @@
-package model;
+package structure.HashTable;
 
 public interface IHashTable<K,V> {
     String add(K key, V value);

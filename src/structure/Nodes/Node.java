@@ -1,4 +1,4 @@
-package model;
+package structure.Nodes;
 
 public class Node<E> implements INode<E> {
     private E data;

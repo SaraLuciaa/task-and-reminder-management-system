@@ -1,4 +1,4 @@
-package model;
+package structure.Stack;
 
 public class StackException extends Exception {
     public StackException(String message){

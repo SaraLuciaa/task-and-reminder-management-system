@@ -1,5 +1,6 @@
-package model;
+package structure.Stack;
 
+import structure.Nodes.Node;
 public class Stack<E> implements IStack<E> {
     private Node<E> top;
 

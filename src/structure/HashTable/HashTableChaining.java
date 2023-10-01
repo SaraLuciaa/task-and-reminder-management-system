@@ -1,10 +1,13 @@
-package model;
+package structure.HashTable;
+
+
+import structure.Nodes.HashNode;
 
 public class HashTableChaining<K,V> implements IHashTable<K,V> {
-    private Node<K,V>[] array;
+    private HashNode<K,V>[] array;
 
     public HashTableChaining(int size) {
-        this.array = new Node[size];
+        this.array = new HashNode[size];
     }
 
     public int hash(K key) throws ConversionException {
@@ -32,9 +35,11 @@ public class HashTableChaining<K,V> implements IHashTable<K,V> {
         try {
             int k = hash(key);
             if(array[k]==null){
-                array[k] = new Node<>(key, value);
+                array[k] = new HashNode<K, V>(key, value) {
+                };
             } else {
-                Node<K,V> newN = new Node<>(key, value);
+                HashNode<K,V> newN = new HashNode<K, V>(key, value) {
+                };
                 newN.setNext(array[k]);
                 array[k] = newN;
             }

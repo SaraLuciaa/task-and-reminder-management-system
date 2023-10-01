@@ -1,4 +1,4 @@
-package model;
+package structure.Stack;
 
 public interface IStack<E> {
     boolean isEmpty();

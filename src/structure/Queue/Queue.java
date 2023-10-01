@@ -1,6 +1,8 @@
-package model;
+package structure.Queue;
 
-public class Queue<E> implements  IQueue<E>{
+import structure.Nodes.Node;
+
+public class Queue<E> implements IQueue<E> {
     private Node<E> front;
     private Node<E> back;
     private int size;

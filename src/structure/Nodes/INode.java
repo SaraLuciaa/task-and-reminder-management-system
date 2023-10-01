@@ -1,4 +1,4 @@
-package model;
+package structure.Nodes;
 
 public interface INode<E> {
     E getData();

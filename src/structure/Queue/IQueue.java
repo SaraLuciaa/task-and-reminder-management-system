@@ -1,4 +1,4 @@
-package model;
+package structure.Queue;
 
 public interface IQueue<E> {
     boolean isEmpty();
