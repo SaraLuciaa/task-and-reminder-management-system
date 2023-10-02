@@ -1,66 +1,79 @@
 package structure.HashTable;
 
-
 import structure.Nodes.HashNode;
 
-public class HashTableChaining<K,V> implements IHashTable<K,V> {
-    private HashNode<K,V>[] array;
+public class HashTableChaining<K, V> implements IHashTable<K, V> {
+    private HashNode<K, V>[] array;
+    private int size;
 
     public HashTableChaining(int size) {
+        this.size = size;
         this.array = new HashNode[size];
     }
 
-    public int hash(K key) throws ConversionException {
-        return convertStringToNatural(key.toString()) % array.length;
+    public int hash(K key) {
+        return Math.abs(key.hashCode() % size);
     }
 
-    public int convertStringToNatural(String str) throws ConversionException {
-        int result = 0;
-
-        for (int i = 0; i < str.length(); i++) {
-            char c = str.charAt(i);
-            int valueUnicode = (int) c;
-
-            if (valueUnicode > 127) {
-                throw new ConversionException("Invalid character in UNICODE range 0-128: " + c);
-            }
-
-            result = result * 128 + valueUnicode;
-        }
-
-        return result;
-    }
-
-    public String add(K key, V value){
+    public String add(K key, V value) {
         try {
-            int k = hash(key);
-            if(array[k]==null){
-                array[k] = new HashNode<K, V>(key, value) {
-                };
+            int index = hash(key);
+            if (array[index] == null) {
+                array[index] = new HashNode<>(key, value);
             } else {
-                HashNode<K,V> newN = new HashNode<K, V>(key, value) {
-                };
-                newN.setNext(array[k]);
-                array[k] = newN;
+                HashNode<K, V> newNode = new HashNode<>(key, value);
+                newNode.setNext(array[index]);
+                array[index] = newNode;
             }
-            return "Node was added at position " + key;
-        } catch (ConversionException e) {
-            return "ConversionException: " + e.getMessage();
+            return "Node was added at position " + index;
+        } catch (NullPointerException e) {
+            return "NullPointerException: " + e.getMessage();
         }
     }
 
     @Override
     public V get(K key) {
+        int index = hash(key);
+        HashNode<K, V> currentNode = array[index];
+        while (currentNode != null) {
+            if (currentNode.getKey().equals(key)) {
+                return currentNode.getValue();
+            }
+            currentNode = currentNode.getNext();
+        }
         return null;
     }
 
     @Override
     public boolean containsKey(K key) {
+        int index = hash(key);
+        HashNode<K, V> currentNode = array[index];
+        while (currentNode != null) {
+            if (currentNode.getKey().equals(key)) {
+                return true;
+            }
+            currentNode = currentNode.getNext();
+        }
         return false;
     }
 
     @Override
     public void remove(K key) {
+        int index = hash(key);
+        HashNode<K, V> currentNode = array[index];
+        HashNode<K, V> previousNode = null;
 
+        while (currentNode != null) {
+            if (currentNode.getKey().equals(key)) {
+                if (previousNode == null) {
+                    array[index] = currentNode.getNext();
+                } else {
+                    previousNode.setNext(currentNode.getNext());
+                }
+                return;
+            }
+            previousNode = currentNode;
+            currentNode = currentNode.getNext();
+        }
     }
 }

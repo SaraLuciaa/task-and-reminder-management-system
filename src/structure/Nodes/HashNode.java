@@ -3,8 +3,8 @@ package structure.Nodes;
 public class HashNode<K, V> implements IHashNode<K,V> {
     private K key;
     private V value;
-    private IHashNode<K, V> next;
-    private IHashNode<K,V> previous;
+    private HashNode<K, V> next;
+    private HashNode<K,V> previous;
 
     public HashNode(K key, V value) {
         this.key = key;
@@ -21,18 +21,19 @@ public class HashNode<K, V> implements IHashNode<K,V> {
     }
 
     @Override
-    public IHashNode<K, V> getNext() {
+    public HashNode<K, V> getNext() {
         return next;
     }
 
-    public IHashNode<K,V> getPrevious(){
+    public HashNode<K,V> getPrevious(){
         return previous;
     }
-    public void setNext(IHashNode<K, V> next) {
+
+    public void setNext(HashNode<K, V> next) {
         this.next = next;
     }
     @Override
-    public void setPrevious(IHashNode<K, V> previous) {
+    public void setPrevious(HashNode<K, V> previous) {
         this.previous = previous;
     }
 

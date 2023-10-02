@@ -1,12 +1,12 @@
 package ui;
 import model.TaskManagementController;
-
+import java.util.Calendar;
 import java.util.Scanner;
 
 public class Main {
     private TaskManagementController taskController;
     public Main(){
-        TaskManagementController taskController=new TaskManagementController();
+        taskController=new TaskManagementController(10);
     }
 
     public static void main(String[] args) {
@@ -15,7 +15,7 @@ public class Main {
     }
 
     public void menu(){
-        boolean status=true;
+        /*boolean status=true;
         Scanner l = new Scanner(System.in);
         int op;
         System.out.println("Welcome to the task management and reminders app");
@@ -25,7 +25,10 @@ public class Main {
             op = l.nextInt();
             switch (op) {
             }
-        }
+        }*/
+
+        System.out.println(taskController.activityAdd("Holis","Me gusta las papitas :3",Calendar.getInstance(),Calendar.getInstance()));
+        System.out.println(taskController.activityAdd("Holis","Me gusta las papitas :3",Calendar.getInstance(),Calendar.getInstance(),true,1));
     }
 
 }

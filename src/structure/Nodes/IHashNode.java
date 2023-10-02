@@ -5,11 +5,11 @@ public interface IHashNode<K, V> {
 
     V getValue();
 
-    IHashNode<K, V> getNext();
+    HashNode<K, V> getNext();
 
-    IHashNode<K,V> getPrevious();
+    HashNode<K,V> getPrevious();
 
-    void setNext(IHashNode<K, V> next);
+    void setNext(HashNode<K, V> next);
 
-    void setPrevious(IHashNode<K, V> previous);
+    void setPrevious(HashNode<K,V> previous);
 }
