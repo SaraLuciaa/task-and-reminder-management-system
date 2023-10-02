@@ -5,15 +5,10 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="820.0" style="-fx-background-color: #192442;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.Main">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="820.0" style="-fx-background-color: #192442;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.Home">
    <children>
       <AnchorPane layoutX="34.0" layoutY="36.0" prefHeight="550.0" prefWidth="750.0">
          <children>
-            <Text fill="#525d96" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -" textAlignment="CENTER" wrappingWidth="750.4000000000001">
-               <font>
-                  <Font name="Century Gothic" size="36.0" />
-               </font>
-            </Text>
             <AnchorPane layoutY="51.0" prefHeight="498.0" prefWidth="500.0" style="-fx-background-color: #525d96; -fx-background-radius: 18;">
                <children>
                   <Text fill="WHITE" layoutX="42.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tasks">
@@ -32,15 +27,22 @@
                   </Text>
                </children>
             </AnchorPane>
-            <Button id="addActivity" fx:id="addActivity" layoutX="242.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="266.0" style="-fx-background-radius: 18; -fx-border-radius: 18; -fx-border-color: #525d96; -fx-border-width: 3; -fx-background-color: #192442;">
-               <graphic>
-                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="+ New activity" textAlignment="CENTER" wrappingWidth="203.1999389648438">
-                     <font>
-                        <Font name="Century Gothic Bold" size="18.0" />
-                     </font>
-                  </Text>
-               </graphic>
-            </Button>
+            <Text fill="WHITE" layoutX="274.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="+ New activity" textAlignment="CENTER" wrappingWidth="203.1999389648438">
+               <font>
+                  <Font name="Century Gothic Bold" size="18.0" />
+               </font>
+            </Text>
+            <Button id="addActivity" fx:id="addActivity" layoutX="242.0" mnemonicParsing="false" onMouseClicked="#goToNewActivity" prefHeight="38.0" prefWidth="266.0" style="-fx-background-radius: 18; -fx-border-radius: 18; -fx-border-color: #525d96; -fx-border-width: 3; -fx-background-color: transparent;" />
+            <Text fill="#525d96" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="- - - - - - - - - - -" textAlignment="CENTER" wrappingWidth="242.39990653991708">
+               <font>
+                  <Font name="Century Gothic" size="36.0" />
+               </font>
+            </Text>
+            <Text fill="#525d96" layoutX="508.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="- - - - - - - - - - -" textAlignment="CENTER" wrappingWidth="242.39990653991708">
+               <font>
+                  <Font name="Century Gothic" size="36.0" />
+               </font>
+            </Text>
          </children>
       </AnchorPane>
    </children>
