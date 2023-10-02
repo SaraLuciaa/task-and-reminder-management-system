@@ -52,4 +52,9 @@ public class TaskManagementController {
         }
         return code;
     }
+    public void exist(){
+        for(String k:keys){
+            System.out.println(hashTableChaining.get(k));
+        }
+    }
 }

@@ -29,6 +29,22 @@ public class Main {
 
         System.out.println(taskController.activityAdd("Holis","Me gusta las papitas :3",Calendar.getInstance(),Calendar.getInstance()));
         System.out.println(taskController.activityAdd("Holis","Me gusta las papitas :3",Calendar.getInstance(),Calendar.getInstance(),true,1));
+        System.out.println(taskController.activityAdd("Holis","Me gusta las papitas :3",Calendar.getInstance(),Calendar.getInstance()));
+        System.out.println(taskController.activityAdd("Holis","Me gusta las papitas :3",Calendar.getInstance(),Calendar.getInstance(),true,1));
+        System.out.println(taskController.activityAdd("Holis","Me gusta las papitas :3",Calendar.getInstance(),Calendar.getInstance()));
+        System.out.println(taskController.activityAdd("Holis","Me gusta las papitas :3",Calendar.getInstance(),Calendar.getInstance(),true,1));
+        System.out.println(taskController.activityAdd("Holis","Me gusta las papitas :3",Calendar.getInstance(),Calendar.getInstance()));
+        System.out.println(taskController.activityAdd("Holis","Me gusta las papitas :3",Calendar.getInstance(),Calendar.getInstance(),true,1));
+        System.out.println(taskController.activityAdd("Holis","Me gusta las papitas :3",Calendar.getInstance(),Calendar.getInstance()));
+        System.out.println(taskController.activityAdd("Holis","Me gusta las papitas :3",Calendar.getInstance(),Calendar.getInstance(),true,1));
+        System.out.println(taskController.activityAdd("Holis","Me gusta las papitas :3",Calendar.getInstance(),Calendar.getInstance()));
+        System.out.println(taskController.activityAdd("Holis","Me gusta las papitas :3",Calendar.getInstance(),Calendar.getInstance(),true,1));
+        System.out.println(taskController.activityAdd("Holis","Me gusta las papitas :3",Calendar.getInstance(),Calendar.getInstance()));
+        System.out.println(taskController.activityAdd("Holis","Me gusta las papitas :3",Calendar.getInstance(),Calendar.getInstance(),true,1));
+        System.out.println(taskController.activityAdd("Holis","Me gusta las papitas :3",Calendar.getInstance(),Calendar.getInstance()));
+        System.out.println(taskController.activityAdd("Holis","Me gusta las papitas :3",Calendar.getInstance(),Calendar.getInstance(),true,1));
+
+        taskController.exist();
     }
 
 }
