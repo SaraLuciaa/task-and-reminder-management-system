@@ -49,20 +49,20 @@
                   <DatePicker fx:id="date" prefHeight="26.0" prefWidth="444.0" style="-fx-background-radius: 18; -fx-background-color: transparent;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <children>
-                        <RadioButton layoutY="21.0" mnemonicParsing="false" text="Task" textFill="WHITE">
+                        <RadioButton fx:id="task" layoutY="21.0" mnemonicParsing="false" onAction="#showTaskProperties" text="Task" textFill="WHITE">
                            <toggleGroup>
                               <ToggleGroup fx:id="isTask" />
                            </toggleGroup></RadioButton>
-                        <RadioButton layoutX="187.0" layoutY="21.0" mnemonicParsing="false" text="Reminder" textFill="WHITE" toggleGroup="$isTask" />
+                        <RadioButton fx:id="reminder" layoutX="187.0" layoutY="21.0" mnemonicParsing="false" text="Reminder" textFill="WHITE" toggleGroup="$isTask" />
                      </children>
                   </AnchorPane>
                   <AnchorPane prefHeight="29.0" prefWidth="297.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                      <children>
-                        <RadioButton disable="true" layoutY="21.0" mnemonicParsing="false" text="Priority" textFill="WHITE">
+                        <RadioButton fx:id="priority" disable="true" layoutY="21.0" mnemonicParsing="false" text="Priority" textFill="WHITE">
                            <toggleGroup>
                               <ToggleGroup fx:id="CategoryTask" />
                            </toggleGroup></RadioButton>
-                        <RadioButton disable="true" layoutX="187.0" layoutY="21.0" mnemonicParsing="false" text="Non-priority" textFill="WHITE" toggleGroup="$CategoryTask" />
+                        <RadioButton fx:id="non_priority" disable="true" layoutX="187.0" layoutY="21.0" mnemonicParsing="false" text="Non-priority" textFill="WHITE" toggleGroup="$CategoryTask" />
                      </children>
                   </AnchorPane>
                   <Label text="Title" textFill="WHITE">
@@ -85,24 +85,24 @@
                         <Font name="Century Gothic Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label disable="true" text="Category" textFill="WHITE" GridPane.rowIndex="4">
+                  <Label fx:id="category" disable="true" text="Category" textFill="WHITE" GridPane.rowIndex="4">
                      <font>
                         <Font name="Century Gothic Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label disable="true" text="Priority level" textFill="WHITE" GridPane.rowIndex="5">
+                  <Label fx:id="priorityLevel" disable="true" text="Priority level" textFill="WHITE" GridPane.rowIndex="5">
                      <font>
                         <Font name="Century Gothic Bold" size="18.0" />
                      </font>
                   </Label>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                      <children>
-                        <RadioButton disable="true" layoutY="21.0" mnemonicParsing="false" text="High" textFill="WHITE">
+                        <RadioButton fx:id="high" disable="true" layoutY="21.0" mnemonicParsing="false" text="High" textFill="WHITE">
                            <toggleGroup>
                               <ToggleGroup fx:id="PriorityLevel" />
                            </toggleGroup></RadioButton>
-                        <RadioButton disable="true" layoutX="187.0" layoutY="21.0" mnemonicParsing="false" text="Medium" textFill="WHITE" toggleGroup="$PriorityLevel" />
-                        <RadioButton disable="true" layoutX="398.0" layoutY="21.0" mnemonicParsing="false" text="Low" textFill="WHITE" toggleGroup="$PriorityLevel" />
+                        <RadioButton fx:id="medium" disable="true" layoutX="187.0" layoutY="21.0" mnemonicParsing="false" text="Medium" textFill="WHITE" toggleGroup="$PriorityLevel" />
+                        <RadioButton fx:id="low" disable="true" layoutX="398.0" layoutY="21.0" mnemonicParsing="false" text="Low" textFill="WHITE" toggleGroup="$PriorityLevel" />
                      </children>
                   </AnchorPane>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-radius: 18; -fx-background-color: transparent;" GridPane.columnIndex="1" GridPane.rowIndex="1">

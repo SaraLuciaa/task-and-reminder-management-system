@@ -9,6 +9,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class Home {
 
@@ -18,7 +19,7 @@ public class Home {
     @FXML
     void goToNewActivity(MouseEvent event) throws IOException {
         Stage stage = (Stage) addActivity.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("new-activity.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("new-activity.fxml")));
         stage.setTitle("Task & Reminder Management :P");
         stage.setScene(new Scene(root));
     }
