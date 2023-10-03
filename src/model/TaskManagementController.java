@@ -8,11 +8,9 @@ import java.util.Random;
 public class TaskManagementController implements Cloneable{
     private HashTableChaining<String,Activity> hashTableChaining;
     private ArrayList<String> keys;
-    private int controllerNum;
-    public TaskManagementController(int size,int controllerNum){
+    public TaskManagementController(int size){
         hashTableChaining=new HashTableChaining<>(size);
         keys=new ArrayList<>();
-        this.controllerNum=controllerNum;
     }
     public String activityAdd(String tittle, String description, Calendar date, Calendar dayTime){
         Reminder reminder=new Reminder(tittle,description,date,dayTime);
@@ -59,16 +57,13 @@ public class TaskManagementController implements Cloneable{
             System.out.println(hashTableChaining.get(k));
         }
     }
-    public int getControllerNum(){
-        return controllerNum;
-    }
-    public void setControllerNum(int s){
-        controllerNum=s;
-    }
     @Override
     public TaskManagementController clone() {
         try {
-            return (TaskManagementController) super.clone();
+            TaskManagementController cloned = (TaskManagementController) super.clone();
+            cloned.hashTableChaining = this.hashTableChaining.clone();
+            cloned.keys = new ArrayList<>(this.keys);
+            return cloned;
         } catch (CloneNotSupportedException e) {
             throw new AssertionError();
         }

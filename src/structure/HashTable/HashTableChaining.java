@@ -2,7 +2,7 @@ package structure.HashTable;
 
 import structure.Nodes.HashNode;
 
-public class HashTableChaining<K, V> implements IHashTable<K, V> {
+public class HashTableChaining<K, V> implements IHashTable<K, V>,Cloneable{
     private HashNode<K, V>[] array;
     private int size;
 
@@ -74,6 +74,16 @@ public class HashTableChaining<K, V> implements IHashTable<K, V> {
             }
             previousNode = currentNode;
             currentNode = currentNode.getNext();
+        }
+    }
+
+    @Override
+    public HashTableChaining<K, V> clone() {
+        try {
+            HashTableChaining clone = (HashTableChaining) super.clone();
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
         }
     }
 }
