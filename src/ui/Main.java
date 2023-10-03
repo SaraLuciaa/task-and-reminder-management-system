@@ -29,13 +29,8 @@ public class Main {
             }
         }*/
         addActivity();
-
-        atras();
     }
     public void addActivity(){
         versionController.addActivity();
-    }
-    public void atras(){
-        versionController.check1();
     }
 }
