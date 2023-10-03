@@ -11,10 +11,10 @@ public class VersionController{
     private int contro=0;
     private static final int DEFAULT_CAPACITY = 10;
 
-    public VersionController() {
+    public VersionController(){
         controllers = new TaskManagementController[DEFAULT_CAPACITY];
         size=0;
-        newController();
+        currentController=new TaskManagementController(10,contro);
     }
 
     public void push(TaskManagementController element) {
@@ -29,7 +29,7 @@ public class VersionController{
         if (isEmpty()) {
             throw new IllegalStateException("The stack is empty");
         }
-        currentController=controllers[size-2];
+        currentController=controllers[size-1];
         controllers[size - 1] = null;
         contro--;
         size--;
@@ -55,21 +55,21 @@ public class VersionController{
         controllers = Arrays.copyOf(controllers, newCapacity);
     }
     private void newController(){
-        currentController=new TaskManagementController(10,contro);
-        push(currentController);
+        currentController=currentController.clone();
         contro++;
+        currentController.setControllerNum(contro);
+        push(currentController);
     }
     public void addActivity(){
+        newController();
         currentController.activityAdd("hola","hola",Calendar.getInstance(),Calendar.getInstance());
         System.out.println("Se agrego objeto. EN controller: "+currentController.getControllerNum());
         currentController.exist();
-        newController();
     }
     public void check1(){
-        currentController.exist();
         System.out.println("Se verifica. En controller: "+currentController.getControllerNum());
         pop();
-        System.out.println("Se hace pop. Se hace pop del controller "+(currentController.getControllerNum()+1));
+        System.out.println("Se hace pop. Se hace pop del controller "+currentController.getControllerNum());
         currentController.exist();
         addActivity();
         currentController.exist();

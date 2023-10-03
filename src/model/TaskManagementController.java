@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Random;
 
-public class TaskManagementController {
+public class TaskManagementController implements Cloneable{
     private HashTableChaining<String,Activity> hashTableChaining;
     private ArrayList<String> keys;
     private int controllerNum;
@@ -61,5 +61,16 @@ public class TaskManagementController {
     }
     public int getControllerNum(){
         return controllerNum;
+    }
+    public void setControllerNum(int s){
+        controllerNum=s;
+    }
+    @Override
+    public TaskManagementController clone() {
+        try {
+            return (TaskManagementController) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }
