@@ -8,9 +8,11 @@ import java.util.Random;
 public class TaskManagementController {
     private HashTableChaining<String,Activity> hashTableChaining;
     private ArrayList<String> keys;
-    public TaskManagementController(int size){
+    private int controllerNum;
+    public TaskManagementController(int size,int controllerNum){
         hashTableChaining=new HashTableChaining<>(size);
         keys=new ArrayList<>();
+        this.controllerNum=controllerNum;
     }
     public String activityAdd(String tittle, String description, Calendar date, Calendar dayTime){
         Reminder reminder=new Reminder(tittle,description,date,dayTime);
@@ -56,5 +58,8 @@ public class TaskManagementController {
         for(String k:keys){
             System.out.println(hashTableChaining.get(k));
         }
+    }
+    public int getControllerNum(){
+        return controllerNum;
     }
 }
