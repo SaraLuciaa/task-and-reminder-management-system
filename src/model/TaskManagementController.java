@@ -90,6 +90,10 @@ public class TaskManagementController implements Cloneable{
             TaskManagementController cloned = (TaskManagementController) super.clone();
             cloned.hashTableChaining = this.hashTableChaining.clone();
             cloned.keys = new ArrayList<>(this.keys);
+            cloned.priorityQueueHigh=this.priorityQueueHigh.clone();
+            cloned.priorityQueueMedium=this.priorityQueueMedium.clone();
+            cloned.priorityQueueLow=this.priorityQueueLow.clone();
+            cloned.queue=this.queue.clone();
             return cloned;
         } catch (CloneNotSupportedException e) {
             throw new AssertionError();

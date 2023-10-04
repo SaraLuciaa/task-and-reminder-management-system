@@ -2,7 +2,7 @@ package structure.Queue;
 
 import structure.Nodes.Node;
 
-public class Queue<E> implements IQueue<E> {
+public class Queue<E> implements IQueue<E>, Cloneable{
     private Node<E> front;
     private Node<E> back;
     private int size;
@@ -68,5 +68,16 @@ public class Queue<E> implements IQueue<E> {
             current = current.getNext();
         }
         return result.toString();
+    }
+
+    @Override
+    public Queue<E> clone() {
+        try {
+            Queue clone = (Queue) super.clone();
+            // TODO: copy mutable state here, so the clone can't change the internals of the original
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

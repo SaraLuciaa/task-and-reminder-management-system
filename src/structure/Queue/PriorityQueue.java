@@ -3,7 +3,7 @@ package structure.Queue;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PriorityQueue<T> {
+public class PriorityQueue<T> implements Cloneable{
     private List<Entry<T>> heap;
 
     private static class Entry<T> {
@@ -96,5 +96,15 @@ public class PriorityQueue<T> {
             index = minIndex;
         }
         heap.set(index, entry);
+    }
+    @Override
+    public PriorityQueue<T> clone() {
+        try {
+            PriorityQueue clone = (PriorityQueue) super.clone();
+            // TODO: copy mutable state here, so the clone can't change the internals of the original
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }
