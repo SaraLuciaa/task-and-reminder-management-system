@@ -14,9 +14,9 @@ public class VersionController{
         currentController=new TaskManagementController(10);
         stack.push(currentController);
     }
-
-    private void newController(){
-        currentController = currentController.clone();
+    private void newController(String action){
+        currentController=currentController.clone();
+        currentController.setAction(action);
         stack.push(currentController);
     }
     private void undoAction(){
@@ -25,7 +25,7 @@ public class VersionController{
 
     public String addActivity(String title, String description, LocalDate date, Boolean isTask, Boolean isPriority, String priorityLevel){
         System.out.println(currentController);
-        newController();
+        newController("Add task");
         System.out.println(currentController);
         System.out.println(priorityLevel);
 
@@ -37,9 +37,10 @@ public class VersionController{
 
         int priorityL = -1;
         switch (priorityLevel){
-            case "high" -> priorityL = 0;
-            case "medium" -> priorityL = 1;
-            case "low" -> priorityL = 2;
+            case "high" -> priorityL = 1;
+            case "medium" -> priorityL = 2;
+            case "low" -> priorityL = 3;
+            default -> priorityL = 0;
         }
 
         Activity newAct;
@@ -53,10 +54,12 @@ public class VersionController{
     }
 
     public void modifyActivity(){
-        newController();
+        newController("Modify element");
     }
     public void deleteActivity(){
-        newController();
+        newController("Delete element");
     }
-
+    public void exist(){
+        currentController.exist();
+    }
 }

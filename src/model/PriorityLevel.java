@@ -1,5 +1,5 @@
 package model;
 
 public enum PriorityLevel {
-    HIGH,MEDIUM,LOW
+    HIGH,MEDIUM,LOW,NON_PRIORITY
 }

@@ -5,7 +5,6 @@ public class Activity {
     private String tittle;
     private String description;
     private Calendar date;
-
     public Activity(String tittle, String description, Calendar date){
         this.tittle=tittle;
         this.description=description;
