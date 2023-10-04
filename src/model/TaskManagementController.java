@@ -19,6 +19,7 @@ public class TaskManagementController implements Cloneable{
         priorityQueueLow=new PriorityQueue();
         priorityQueueMedium=new PriorityQueue();
         priorityQueueHigh=new PriorityQueue();
+        queue=new Queue<>();
         keys=new ArrayList<>();
     }
     public String activityAdd(String tittle, String description, Calendar date){
@@ -26,27 +27,36 @@ public class TaskManagementController implements Cloneable{
         String code=keyCreator();
         hashTableChaining.add(code,reminder);
         keys.add(code);
-        return "Your reminder was added with the key: "+code;
+        return "Your reminder was added with the key: " + code;
     }
+
     public String activityAdd(String tittle, String description, Calendar date,boolean isPriority, int pl){
-        PriorityLevel priorityLevel=searchPriorityLevel(pl);
-        Task task=new Task(tittle,description,date,isPriority,priorityLevel);
+        Task task=new Task(tittle,description,date,isPriority,pl);
         String code=keyCreator();
         hashTableChaining.add(code,task);
         if(isPriority) {
-            priorityQueueAdd(task,priorityLevel);
+            priorityQueueAdd(task,PriorityLevel.values()[pl]);
         }
         keys.add(code);
-        return "Your task was added with the key: "+code;
+        return "Your task was added with the key: " + code;
     }
-    public PriorityLevel searchPriorityLevel(int level){
-        return switch (level) {
-            case 1 -> PriorityLevel.HIGH;
-            case 2 -> PriorityLevel.MEDIUM;
-            case 3 -> PriorityLevel.LOW;
-            default -> null;
-        };
+
+    public String addActivity(Activity newAct){
+        String code=keyCreator();
+        hashTableChaining.add(code,newAct);
+        keys.add(code);
+        if(newAct instanceof Task){
+            Task task = (Task) newAct;
+            if(task.isPriority()){
+                priorityQueueAdd(task,task.getPriorityLevel());
+            } else {
+                // Add to queue
+            }
+        }
+        return "Your activity was added with the key: " + code;
     }
+
+
     public String keyCreator(){
         String validCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         Random random = new Random();

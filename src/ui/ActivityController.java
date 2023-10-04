@@ -9,12 +9,19 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import model.VersionController;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class Activity implements Initializable {
+public class ActivityController implements Initializable {
+    private VersionController vc;
+    public ActivityController(){}
+
+    public void setVersionController(VersionController versionController) {
+        vc = versionController;
+    }
 
     @FXML private TextField title;
     @FXML private TextArea description;
@@ -76,22 +83,43 @@ public class Activity implements Initializable {
     @FXML
     void goHome(MouseEvent event) throws IOException {
         Stage stage = (Stage) goBack.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("task-reminder.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("task-reminder.fxml"));
+        Parent root = loader.load();
         stage.setTitle("Task & Reminder Management :P");
         stage.setScene(new Scene(root));
     }
 
     @FXML
     void saveActivity(MouseEvent event) {
-        System.out.println(title.getText());
-        System.out.println(description.getText());
-        System.out.println(date.getValue());
-        if(isTask.getSelectedToggle()==task){
-            System.out.println(CategoryTask.getSelectedToggle());
-            if(CategoryTask.getSelectedToggle()==priority){
-                System.out.println(PriorityLevel.getSelectedToggle());
+        String message = vc.addActivity(title.getText(), description.getText(), date.getValue(), task.isSelected(),
+                        priority.isSelected(), ((RadioButton) PriorityLevel.getSelectedToggle()).getId());
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText(message);
+
+        ButtonType buttonTypeA = new ButtonType("New activity");
+        ButtonType buttonTypeB = new ButtonType("Go back");
+        alert.getButtonTypes().setAll(buttonTypeA, buttonTypeB);
+
+        alert.showAndWait().ifPresent(response -> {
+            if (response == buttonTypeA) {
+               title.clear();
+               description.clear();
+               date.setValue(null);
+               CategoryTask.selectToggle(null);
+               PriorityLevel.selectToggle(null);
+            } else {
+                try {
+                    Stage stage = (Stage) goBack.getScene().getWindow();
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("task-reminder.fxml"));
+                    Parent root = loader.load();
+                    stage.setTitle("Task & Reminder Management :P");
+                    stage.setScene(new Scene(root));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
-        }
+        });
     }
 
     @FXML
