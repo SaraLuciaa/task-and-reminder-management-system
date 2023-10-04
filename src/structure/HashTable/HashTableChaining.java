@@ -15,6 +15,10 @@ public class HashTableChaining<K, V> implements IHashTable<K, V>,Cloneable{
         return Math.abs(key.hashCode() % size);
     }
 
+    public HashNode<K, V>[] getArray() {
+        return array;
+    }
+
     public String add(K key, V value) {
         try {
             int index = hash(key);

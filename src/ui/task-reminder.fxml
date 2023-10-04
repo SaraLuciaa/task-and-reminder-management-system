@@ -2,9 +2,10 @@
 
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
@@ -14,33 +15,57 @@
    <children>
       <AnchorPane layoutX="34.0" layoutY="36.0" prefHeight="550.0" prefWidth="750.0">
          <children>
-            <AnchorPane layoutY="51.0" prefHeight="498.0" prefWidth="750.0" style="-fx-background-color: #525d96; -fx-background-radius: 18;">
+            <AnchorPane layoutY="51.0" prefHeight="453.0" prefWidth="750.0" style="-fx-background-color: #525d96; -fx-background-radius: 18;">
                <children>
-                  <TabPane prefHeight="498.0" prefWidth="750.0" tabClosingPolicy="UNAVAILABLE">
+                  <TabPane prefHeight="454.0" prefWidth="750.0" tabClosingPolicy="UNAVAILABLE">
                     <tabs>
                       <Tab text="Priority Tasks">
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <Accordion prefHeight="440.0" prefWidth="750.0">
+                                    <Accordion prefHeight="396.0" prefWidth="750.0">
                                       <panes>
                                         <TitledPane animated="false" text="HIGH">
                                           <content>
                                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                                    <children>
-                                                      <ScrollPane hbarPolicy="NEVER" layoutX="-1.0" prefHeight="356.0" prefWidth="750.0" />
+                                                      <TableView fx:id="highTasks" prefHeight="314.0" prefWidth="750.0">
+                                                        <columns>
+                                                          <TableColumn fx:id="highTitle" prefWidth="194.40001374483109" text="Title" />
+                                                          <TableColumn fx:id="highDescription" prefWidth="372.80003356933594" text="Description" />
+                                                            <TableColumn fx:id="highDate" prefWidth="180.0" text="Date" />
+                                                        </columns>
+                                                      </TableView>
                                                    </children>
                                                 </AnchorPane>
                                           </content>
                                         </TitledPane>
                                         <TitledPane animated="false" text="MEDIUM">
                                           <content>
-                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <TableView fx:id="mediumTasks" prefHeight="314.0" prefWidth="750.0">
+                                                         <columns>
+                                                            <TableColumn fx:id="mediumTitle" prefWidth="194.40001374483109" text="Title" />
+                                                            <TableColumn fx:id="mediumDescription" prefWidth="372.80003356933594" text="Description" />
+                                                            <TableColumn fx:id="mediumDate" prefWidth="180.0" text="Date" />
+                                                         </columns>
+                                                      </TableView>
+                                                   </children></AnchorPane>
                                           </content>
                                         </TitledPane>
-                                        <TitledPane animated="false" text="LOW">
+                                        <TitledPane fx:id="lowTasks" animated="false" text="LOW">
                                           <content>
-                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="355.0" prefWidth="602.0" />
+                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <TableView fx:id="lowTasks" prefHeight="314.0" prefWidth="750.0">
+                                                         <columns>
+                                                            <TableColumn fx:id="lowTitle" prefWidth="194.40001374483109" text="Title" />
+                                                            <TableColumn fx:id="lowDescription" prefWidth="372.80003356933594" text="Description" />
+                                                            <TableColumn fx:id="lowDate" prefWidth="180.0" text="Date" />
+                                                         </columns>
+                                                      </TableView>
+                                                   </children></AnchorPane>
                                           </content>
                                         </TitledPane>
                                       </panes>
@@ -51,12 +76,30 @@
                       </Tab>
                       <Tab text="Non-priority Tasks">
                         <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <TableView fx:id="nonPriorityTasks" prefHeight="395.0" prefWidth="750.0">
+                                       <columns>
+                                          <TableColumn fx:id="tasksTitle" prefWidth="194.40001374483109" text="Title" />
+                                          <TableColumn fx:id="tasksDescription" prefWidth="372.80003356933594" text="Description" />
+                                          <TableColumn fx:id="tasksDate" prefWidth="180.0" text="Date" />
+                                       </columns>
+                                    </TableView>
+                                 </children></AnchorPane>
                         </content>
                       </Tab>
                         <Tab text="Reminder">
                           <content>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <TableView fx:id="reminders" prefHeight="397.0" prefWidth="750.0">
+                                       <columns>
+                                          <TableColumn fx:id="reminderTitle" prefWidth="194.40001374483109" text="Title" />
+                                          <TableColumn fx:id="reminderDescription" prefWidth="372.80003356933594" text="Description" />
+                                          <TableColumn fx:id="reminderDate" prefWidth="180.0" text="Date" />
+                                       </columns>
+                                    </TableView>
+                                 </children></AnchorPane>
                           </content>
                         </Tab>
                     </tabs>
@@ -79,6 +122,16 @@
                   <Font name="Century Gothic" size="36.0" />
                </font>
             </Text>
+            <Button layoutX="259.0" layoutY="521.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="98.0" style="-fx-background-color: #525d96; -fx-background-radius: 18;" text="Edit" textFill="WHITE">
+               <font>
+                  <Font name="Century Gothic Bold" size="18.0" />
+               </font>
+            </Button>
+            <Button layoutX="393.0" layoutY="521.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="98.0" style="-fx-background-color: #525d96; -fx-background-radius: 18;" text="Delete" textFill="WHITE">
+               <font>
+                  <Font name="Century Gothic Bold" size="18.0" />
+               </font>
+            </Button>
          </children>
       </AnchorPane>
    </children>

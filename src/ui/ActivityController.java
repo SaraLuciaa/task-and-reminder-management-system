@@ -13,6 +13,7 @@ import model.VersionController;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Calendar;
 import java.util.ResourceBundle;
 
 public class ActivityController implements Initializable {
@@ -91,8 +92,25 @@ public class ActivityController implements Initializable {
 
     @FXML
     void saveActivity(MouseEvent event) {
-        String message = vc.addActivity(title.getText(), description.getText(), date.getValue(), task.isSelected(),
-                        priority.isSelected(), ((RadioButton) PriorityLevel.getSelectedToggle()).getId());
+        String message = "";
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.clear();
+        calendar.set(Calendar.YEAR, date.getValue().getYear());
+        calendar.set(Calendar.MONTH, date.getValue().getMonthValue() - 1);
+        calendar.set(Calendar.DAY_OF_MONTH, date.getValue().getDayOfMonth());
+
+        if(task.isSelected()){
+            if(priority.isSelected()){
+                message = vc.addActivity(title.getText(), description.getText(), calendar,
+                        true, ((RadioButton) PriorityLevel.getSelectedToggle()).getId());
+            } else {
+                message = vc.addActivity(title.getText(), description.getText(), calendar,
+                        false, "");
+            }
+        } else {
+            message = vc.addActivity(title.getText(), description.getText(), calendar);
+        }
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText(message);

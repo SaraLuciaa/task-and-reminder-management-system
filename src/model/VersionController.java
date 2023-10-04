@@ -2,7 +2,6 @@ package model;
 
 import structure.Stack.Stack;
 
-import java.time.LocalDate;
 import java.util.Calendar;
 
 public class VersionController{
@@ -10,12 +9,13 @@ public class VersionController{
     private Stack<TaskManagementController> stack;
 
     public VersionController(){
-        stack=new Stack<>();
-        currentController=new TaskManagementController(10);
+        stack = new Stack<>();
+        currentController = new TaskManagementController(10);
         stack.push(currentController);
     }
+
     private void newController(String action){
-        currentController=currentController.clone();
+        currentController = currentController.clone();
         currentController.setAction(action);
         stack.push(currentController);
     }
@@ -23,17 +23,9 @@ public class VersionController{
         currentController=stack.pop();
     }
 
-    public String addActivity(String title, String description, LocalDate date, Boolean isTask, Boolean isPriority, String priorityLevel){
-        System.out.println(currentController);
+    public String addActivity(String title, String description, Calendar date, Boolean isPriority, String priorityLevel){
         newController("Add task");
-        System.out.println(currentController);
         System.out.println(priorityLevel);
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.clear();
-        calendar.set(Calendar.YEAR, date.getYear());
-        calendar.set(Calendar.MONTH, date.getMonthValue() - 1);
-        calendar.set(Calendar.DAY_OF_MONTH, date.getDayOfMonth());
 
         int priorityL = -1;
         switch (priorityLevel){
@@ -43,12 +35,15 @@ public class VersionController{
             default -> priorityL = 0;
         }
 
-        Activity newAct;
-        if(isTask){
-            newAct = new Task(title,description,calendar,isPriority, priorityL);
-        } else {
-            newAct = new Reminder(title,description,calendar);
-        }
+        Task newAct = new Task(title,description,date,isPriority, priorityL);
+
+        return currentController.addActivity(newAct);
+    }
+
+    public String addActivity(String title, String description, Calendar date){
+        newController("Add reminder");
+
+        Reminder newAct = new Reminder(title,description,date);
 
         return currentController.addActivity(newAct);
     }

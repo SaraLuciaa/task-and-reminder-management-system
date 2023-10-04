@@ -35,4 +35,7 @@ public class Activity {
         this.date = date;
     }
 
+    public String toString(){
+        return tittle + " " + description + " " + date;
+    }
 }
