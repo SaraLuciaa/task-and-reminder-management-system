@@ -13,30 +13,30 @@ public class VersionController{
         currentController=new TaskManagementController(10);
         stack.push(currentController);
     }
-    private void newController(){
+    private void newController(String action){
         currentController=currentController.clone();
+        currentController.setAction(action);
         stack.push(currentController);
     }
     private void undoAction(){
         currentController=stack.pop();
     }
-    public void addActivity(){
-        newController();
-        Calendar fecha = Calendar.getInstance();
-        fecha.set(2023, Calendar.OCTOBER, 15, 12, 0, 0);
-        currentController.activityAdd("goa","jos",fecha,true,1);
-        fecha.set(2023, Calendar.OCTOBER, 15, 14, 30, 0);
-        currentController.activityAdd("goa","jos",fecha,true,1);
-        fecha.set(2023, Calendar.OCTOBER, 4, 14, 30, 0);
-        currentController.activityAdd("goa","jos",fecha,true,1);
-        fecha.set(2023, Calendar.OCTOBER, 30, 14, 30, 0);
-        currentController.activityAdd("goa","jos",fecha,true,1);
+    public String addActivity(String tittle, String description, Calendar date){
+        newController("Add reminder");
+        return currentController.activityAdd(tittle,description,date);
     }
-    public void modifyActivity(){
-        newController();
-    }
-    public void deleteActivity(){
-        newController();
+    public String addActivity(String tittle, String description, Calendar date,boolean isPriority, int priorityLevel){
+        newController("Add task");
+        return currentController.activityAdd(tittle,description,date,isPriority,priorityLevel);
     }
 
+    public void modifyActivity(){
+        newController("Modify element");
+    }
+    public void deleteActivity(){
+        newController("Delete element");
+    }
+    public void exist(){
+        currentController.exist();
+    }
 }

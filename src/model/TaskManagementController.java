@@ -13,12 +13,16 @@ public class TaskManagementController implements Cloneable{
     private PriorityQueue priorityQueueLow;
     private PriorityQueue priorityQueueMedium;
     private PriorityQueue priorityQueueHigh;
-    private Queue queue;
+    private Queue taskQueue;
+    private Queue reminderQueue;
+    private String action="";
     public TaskManagementController(int size){
         hashTableChaining=new HashTableChaining<>(size);
         priorityQueueLow=new PriorityQueue();
         priorityQueueMedium=new PriorityQueue();
         priorityQueueHigh=new PriorityQueue();
+        taskQueue=new Queue();
+        reminderQueue=new Queue();
         keys=new ArrayList<>();
     }
     public String activityAdd(String tittle, String description, Calendar date){
@@ -26,6 +30,7 @@ public class TaskManagementController implements Cloneable{
         String code=keyCreator();
         hashTableChaining.add(code,reminder);
         keys.add(code);
+        reminderQueue.offer(reminder);
         return "Your reminder was added with the key: "+code;
     }
     public String activityAdd(String tittle, String description, Calendar date,boolean isPriority, int pl){
@@ -35,12 +40,15 @@ public class TaskManagementController implements Cloneable{
         hashTableChaining.add(code,task);
         if(isPriority) {
             priorityQueueAdd(task,priorityLevel);
+        }else{
+            taskQueue.offer(task);
         }
         keys.add(code);
-        return "Your task was added with the key: "+code;
+        return "Your priority task was added with the key: "+code;
     }
     public PriorityLevel searchPriorityLevel(int level){
         return switch (level) {
+            case 0 -> PriorityLevel.NON_PRIORITY;
             case 1 -> PriorityLevel.HIGH;
             case 2 -> PriorityLevel.MEDIUM;
             case 3 -> PriorityLevel.LOW;
@@ -73,13 +81,13 @@ public class TaskManagementController implements Cloneable{
         }else{
             priorityQueueLow.enqueue(task,priority);
         }
-        System.out.println(priorityQueueHigh.peek());
     }
     public long calculatePriority(Calendar date){
         Calendar now = Calendar.getInstance();
         return (date.getTimeInMillis() - now.getTimeInMillis()) / 1000;
     }
     public void exist(){
+        System.out.println("\n\n\n");
         for(String k:keys){
             System.out.println(hashTableChaining.get(k));
         }
@@ -93,10 +101,17 @@ public class TaskManagementController implements Cloneable{
             cloned.priorityQueueHigh=this.priorityQueueHigh.clone();
             cloned.priorityQueueMedium=this.priorityQueueMedium.clone();
             cloned.priorityQueueLow=this.priorityQueueLow.clone();
-            cloned.queue=this.queue.clone();
+            cloned.taskQueue=this.taskQueue.clone();
+            cloned.reminderQueue=this.reminderQueue.clone();
             return cloned;
         } catch (CloneNotSupportedException e) {
             throw new AssertionError();
         }
+    }
+    public String getAction() {
+        return action;
+    }
+    public void setAction(String action) {
+        this.action = action;
     }
 }
