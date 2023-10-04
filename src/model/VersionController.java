@@ -22,16 +22,21 @@ public class VersionController{
     }
     public void addActivity(){
         newController();
-        currentController.activityAdd("hola","hola",Calendar.getInstance(),Calendar.getInstance());
-        currentController.exist();
-        System.out.println("\n\n\n");
+        Calendar fecha = Calendar.getInstance();
+        fecha.set(2023, Calendar.OCTOBER, 15, 12, 0, 0);
+        currentController.activityAdd("goa","jos",fecha,true,1);
+        fecha.set(2023, Calendar.OCTOBER, 15, 14, 30, 0);
+        currentController.activityAdd("goa","jos",fecha,true,1);
+        fecha.set(2023, Calendar.OCTOBER, 4, 14, 30, 0);
+        currentController.activityAdd("goa","jos",fecha,true,1);
+        fecha.set(2023, Calendar.OCTOBER, 30, 14, 30, 0);
+        currentController.activityAdd("goa","jos",fecha,true,1);
+    }
+    public void modifyActivity(){
         newController();
-        currentController.activityAdd("hola","hola",Calendar.getInstance(),Calendar.getInstance());
-        currentController.activityAdd("hola","hola",Calendar.getInstance(),Calendar.getInstance());
-        currentController.exist();
-        undoAction();
-        System.out.println("\n\n\n");
-        currentController.exist();
+    }
+    public void deleteActivity(){
+        newController();
     }
 
 }

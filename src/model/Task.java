@@ -5,8 +5,8 @@ import java.util.Calendar;
 public class Task extends Activity{
     private boolean isPriority;
     private PriorityLevel priorityLevel;
-    public Task(String tittle, String description, Calendar date, Calendar dayTime,boolean isPriority,PriorityLevel priorityLevel){
-        super(tittle,description,date,dayTime);
+    public Task(String tittle, String description, Calendar date,boolean isPriority,PriorityLevel priorityLevel){
+        super(tittle,description,date);
         this.isPriority=isPriority;
         this.priorityLevel=priorityLevel;
     }

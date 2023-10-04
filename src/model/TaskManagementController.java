@@ -1,6 +1,8 @@
 package model;
 
+
 import structure.HashTable.HashTableChaining;
+import structure.Queue.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Random;
@@ -8,22 +10,32 @@ import java.util.Random;
 public class TaskManagementController implements Cloneable{
     private HashTableChaining<String,Activity> hashTableChaining;
     private ArrayList<String> keys;
+    private PriorityQueue priorityQueueLow;
+    private PriorityQueue priorityQueueMedium;
+    private PriorityQueue priorityQueueHigh;
+    private Queue queue;
     public TaskManagementController(int size){
         hashTableChaining=new HashTableChaining<>(size);
+        priorityQueueLow=new PriorityQueue();
+        priorityQueueMedium=new PriorityQueue();
+        priorityQueueHigh=new PriorityQueue();
         keys=new ArrayList<>();
     }
-    public String activityAdd(String tittle, String description, Calendar date, Calendar dayTime){
-        Reminder reminder=new Reminder(tittle,description,date,dayTime);
+    public String activityAdd(String tittle, String description, Calendar date){
+        Reminder reminder=new Reminder(tittle,description,date);
         String code=keyCreator();
         hashTableChaining.add(code,reminder);
         keys.add(code);
         return "Your reminder was added with the key: "+code;
     }
-    public String activityAdd(String tittle, String description, Calendar date, Calendar dayTime,boolean isPriority, int pl){
+    public String activityAdd(String tittle, String description, Calendar date,boolean isPriority, int pl){
         PriorityLevel priorityLevel=searchPriorityLevel(pl);
-        Task task=new Task(tittle,description,date,dayTime,isPriority,priorityLevel);
+        Task task=new Task(tittle,description,date,isPriority,priorityLevel);
         String code=keyCreator();
         hashTableChaining.add(code,task);
+        if(isPriority) {
+            priorityQueueAdd(task,priorityLevel);
+        }
         keys.add(code);
         return "Your task was added with the key: "+code;
     }
@@ -51,6 +63,21 @@ public class TaskManagementController implements Cloneable{
             keyCreator();
         }
         return code;
+    }
+    public void priorityQueueAdd(Task task, PriorityLevel priorityLevel){
+        long priority=calculatePriority(task.getDate());
+        if(priorityLevel==PriorityLevel.HIGH){
+            priorityQueueHigh.enqueue(task,priority);
+        }else if(priorityLevel==PriorityLevel.MEDIUM){
+            priorityQueueMedium.enqueue(task,priority);
+        }else{
+            priorityQueueLow.enqueue(task,priority);
+        }
+        System.out.println(priorityQueueHigh.peek());
+    }
+    public long calculatePriority(Calendar date){
+        Calendar now = Calendar.getInstance();
+        return (date.getTimeInMillis() - now.getTimeInMillis()) / 1000;
     }
     public void exist(){
         for(String k:keys){

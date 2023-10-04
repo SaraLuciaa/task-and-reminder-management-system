@@ -3,14 +3,14 @@ package structure.Queue;
 import java.util.ArrayList;
 import java.util.List;
 
-class PriorityQueue<T> {
+public class PriorityQueue<T> {
     private List<Entry<T>> heap;
 
     private static class Entry<T> {
         T item;
-        int priority;
+        long priority;
 
-        Entry(T item, int priority) {
+        Entry(T item, long priority) {
             this.item = item;
             this.priority = priority;
         }
@@ -24,7 +24,7 @@ class PriorityQueue<T> {
         return heap.isEmpty();
     }
 
-    public void enqueue(T item, int priority) {
+    public void enqueue(T item, long priority) {
         Entry<T> entry = new Entry<>(item, priority);
         heap.add(entry);
         int index = heap.size() - 1;
