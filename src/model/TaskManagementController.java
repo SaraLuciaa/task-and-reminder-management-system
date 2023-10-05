@@ -97,24 +97,47 @@ public class TaskManagementController implements Cloneable{
 
     @Override
     public TaskManagementController clone() {
-        try {
-            TaskManagementController cloned = (TaskManagementController) super.clone();
-            cloned.hashTableChaining = this.hashTableChaining.clone();
-            cloned.keys = new ArrayList<>(this.keys);
-            cloned.priorityQueueHigh=this.priorityQueueHigh.clone();
-            cloned.priorityQueueMedium=this.priorityQueueMedium.clone();
-            cloned.priorityQueueLow=this.priorityQueueLow.clone();
-            cloned.taskQueue=this.taskQueue.clone();
-            cloned.reminderQueue=this.reminderQueue.clone();
-            return cloned;
-        } catch (CloneNotSupportedException e) {
-            throw new AssertionError();
+        TaskManagementController clon = new TaskManagementController(10);
+        clon.hashTableChaining = this.hashTableChaining.clone();
+        clon.keys = new ArrayList<>(this.keys);
+
+        HashNode<String, Activity>[] array = clon.hashTableChaining.getArray();
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] != null) {
+                do {
+                    array[i].setValue(array[i].getValue().clone());
+                    Activity act = array[i].getValue();
+                    if(act instanceof Task){
+                        if(((Task) act).getPriorityLevel()==PriorityLevel.NON_PRIORITY){
+                            clon.taskQueue.offer(act);
+                        } else if(((Task) act).getPriorityLevel()==PriorityLevel.LOW){
+                            clon.priorityQueueLow.enqueue(act, calculatePriority(act.getDate()));
+                        } else if(((Task) act).getPriorityLevel()==PriorityLevel.MEDIUM){
+                            clon.priorityQueueMedium.enqueue(act, calculatePriority(act.getDate()));
+                        } else {
+                            clon.priorityQueueHigh.enqueue(act, calculatePriority(act.getDate()));
+                        }
+                    } else {
+                        clon.reminderQueue.offer(act);
+                    }
+                } while(array[i].getNext()!=null);
+            }
         }
+
+        return clon;
     }
     public String getAction() {
         return action;
     }
     public void setAction(String action) {
         this.action = action;
+    }
+
+    public void setSomething(String newTitle){
+        Activity activity = hashTableChaining.get(keys.get(0));
+        activity.setTittle(newTitle);
+    }
+    public void getSomething(){
+        System.out.println(hashTableChaining.get(keys.get(0)).getTittle());
     }
 }

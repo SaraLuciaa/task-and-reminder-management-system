@@ -1,7 +1,9 @@
 package model;
-import java.util.Calendar;
 
-public class Activity {
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
+public class Activity implements Cloneable {
     private String tittle;
     private String description;
     private Calendar date;
@@ -37,5 +39,20 @@ public class Activity {
 
     public String toString(){
         return tittle + " " + description + " " + date;
+    }
+
+    @Override
+    public Activity clone() {
+        try {
+            Activity clonedActivity = (Activity) super.clone();
+
+            Calendar clonedDate = new GregorianCalendar();
+            clonedDate.setTimeInMillis(this.date.getTimeInMillis());
+            clonedActivity.date = clonedDate;
+
+            return clonedActivity;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

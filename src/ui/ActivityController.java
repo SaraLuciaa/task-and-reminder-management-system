@@ -126,6 +126,7 @@ public class ActivityController implements Initializable {
                date.setValue(null);
                CategoryTask.selectToggle(null);
                PriorityLevel.selectToggle(null);
+               isTask.selectToggle(null);
             } else {
                 try {
                     Stage stage = (Stage) goBack.getScene().getWindow();

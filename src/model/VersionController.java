@@ -19,7 +19,7 @@ public class VersionController{
         currentController.setAction(action);
         stack.push(currentController);
     }
-    private void undoAction(){
+    public void undoAction(){
         currentController=stack.pop();
     }
 
@@ -48,8 +48,13 @@ public class VersionController{
         return currentController.addActivity(newAct);
     }
 
-    public void modifyActivity(){
+    public void modifyActivity(String title){
         newController("Modify element");
+
+        currentController.setSomething(title);
+    }
+    public void getSomething(){
+        currentController.getSomething();
     }
     public void deleteActivity(){
         newController("Delete element");
