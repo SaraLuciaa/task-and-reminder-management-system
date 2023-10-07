@@ -9,7 +9,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import model.VersionController;
 
 import java.io.IOException;
 import java.net.URL;
@@ -17,13 +16,6 @@ import java.util.Calendar;
 import java.util.ResourceBundle;
 
 public class ActivityController implements Initializable {
-    private VersionController vc;
-    public ActivityController(){}
-
-    public void setVersionController(VersionController versionController) {
-        vc = versionController;
-    }
-
     @FXML private TextField title;
     @FXML private TextArea description;
     @FXML private DatePicker date;
@@ -102,14 +94,14 @@ public class ActivityController implements Initializable {
 
         if(task.isSelected()){
             if(priority.isSelected()){
-                message = vc.addActivity(title.getText(), description.getText(), calendar,
+                message = Main.vc.addActivity(title.getText(), description.getText(), calendar,
                         true, ((RadioButton) PriorityLevel.getSelectedToggle()).getId());
             } else {
-                message = vc.addActivity(title.getText(), description.getText(), calendar,
+                message = Main.vc.addActivity(title.getText(), description.getText(), calendar,
                         false, "");
             }
         } else {
-            message = vc.addActivity(title.getText(), description.getText(), calendar);
+            message = Main.vc.addActivity(title.getText(), description.getText(), calendar);
         }
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);

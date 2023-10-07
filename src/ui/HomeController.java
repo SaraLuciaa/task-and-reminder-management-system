@@ -1,5 +1,7 @@
 package ui;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -8,10 +10,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import model.Activity;
-import model.VersionController;
+import structure.Nodes.Node;
 
 import java.io.IOException;
 import java.net.URL;
@@ -19,12 +22,6 @@ import java.util.Calendar;
 import java.util.ResourceBundle;
 
 public class HomeController implements Initializable {
-    private VersionController versionController;
-
-    public HomeController(){
-        versionController = new VersionController();
-    }
-
     @FXML private Button addActivity;
 
     @FXML private TableView<Activity> highTasks;
@@ -47,7 +44,7 @@ public class HomeController implements Initializable {
     @FXML private TableColumn<Activity, String> tasksDescription;
     @FXML private TableColumn<Activity, String> tasksTitle;
 
-    @FXML private TableView<Activity> reminders;
+    @FXML private TableView<Activity> reminders = new TableView<>();
     @FXML private TableColumn<Activity, Calendar> reminderDate;
     @FXML private TableColumn<Activity, String> reminderDescription;
     @FXML private TableColumn<Activity, String> reminderTitle;
@@ -57,14 +54,48 @@ public class HomeController implements Initializable {
         Stage stage = (Stage) addActivity.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("new-activity.fxml"));
         Parent root = loader.load();
-        ActivityController activity = loader.getController();
-        activity.setVersionController(versionController);
         stage.setTitle("Task & Reminder Management :P");
         stage.setScene(new Scene(root));
     }
 
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        listReminders();
+        listTasks();
+    }
 
+    public void listReminders(){
+        ObservableList<Activity> reminder = FXCollections.observableArrayList();
+        Node<Activity> reminderQ = Main.vc.getReminderQueue();
+
+        while(reminderQ!=null) {
+            reminder.add(reminderQ.getData());
+            reminderQ = reminderQ.getNext();
+        }
+
+        reminders.setItems(reminder);
+        reminderTitle.setCellValueFactory(new PropertyValueFactory<>("tittle"));
+        reminderDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
+        reminderDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+    }
+
+    public void listTasks(){
+        ObservableList<Activity> highTask = FXCollections.observableArrayList();
+        ObservableList<Activity> mediumTask = FXCollections.observableArrayList();
+        ObservableList<Activity> lowTask = FXCollections.observableArrayList();
+        ObservableList<Activity> nonTask = FXCollections.observableArrayList();
+
+        Node<Activity> taskQ = Main.vc.getTaskQueue();
+
+        while(taskQ!=null) {
+            nonTask.add(taskQ.getData());
+            taskQ = taskQ.getNext();
+        }
+
+        nonPriorityTasks.setItems(nonTask);
+        tasksTitle.setCellValueFactory(new PropertyValueFactory<>("tittle"));
+        tasksDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
+        tasksDate.setCellValueFactory(new PropertyValueFactory<>("date"));
     }
 }

@@ -2,7 +2,10 @@ package model;
 
 import structure.HashTable.HashTableChaining;
 import structure.Nodes.HashNode;
-import structure.Queue.*;
+import structure.Nodes.Node;
+import structure.Queue.PriorityQueue;
+import structure.Queue.Queue;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Random;
@@ -29,6 +32,34 @@ public class TaskManagementController implements Cloneable{
         action = "";
     }
 
+    /* public HashNode<String, Activity>[] getArray(){
+        return hashTableChaining.getArray();
+    }
+
+    public PriorityQueue<Activity> getPriorityQueueLow() {
+        return priorityQueueLow;
+    }
+
+    public PriorityQueue<Activity> getPriorityQueueMedium() {
+        return priorityQueueMedium;
+    }
+
+    public PriorityQueue<Activity> getPriorityQueueHigh() {
+        return priorityQueueHigh;
+    }
+
+    public Queue<Activity> getTaskQueue() {
+        return taskQueue;
+    }*/
+
+    public Node<Activity> getTaskQueue() {
+        return taskQueue.peekNode();
+    }
+
+    public Node<Activity> getReminderQueue() {
+        return reminderQueue.peekNode();
+    }
+
     public String addActivity(Activity newAct){
         String code=keyCreator();
         hashTableChaining.add(code,newAct);
@@ -38,10 +69,12 @@ public class TaskManagementController implements Cloneable{
             if(task.isPriority()){
                 priorityQueueAdd(task,task.getPriorityLevel());
             } else {
-                taskQueue.offer(task);
+                taskQueue.offer(newAct);
             }
+        } else {
+            reminderQueue.offer(newAct);
         }
-        showActivities();
+        reminderQueue.print();
         return "Your activity was added with the key: " + code;
     }
 
@@ -73,6 +106,7 @@ public class TaskManagementController implements Cloneable{
             priorityQueueLow.enqueue(task,priority);
         }
     }
+
     public long calculatePriority(Calendar date){
         Calendar now = Calendar.getInstance();
         return (date.getTimeInMillis() - now.getTimeInMillis()) / 1000;
@@ -123,12 +157,13 @@ public class TaskManagementController implements Cloneable{
                 } while(array[i].getNext()!=null);
             }
         }
-
         return clon;
     }
+
     public String getAction() {
         return action;
     }
+
     public void setAction(String action) {
         this.action = action;
     }
@@ -137,6 +172,7 @@ public class TaskManagementController implements Cloneable{
         Activity activity = hashTableChaining.get(keys.get(0));
         activity.setTittle(newTitle);
     }
+
     public void getSomething(){
         System.out.println(hashTableChaining.get(keys.get(0)).getTittle());
     }

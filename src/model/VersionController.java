@@ -1,5 +1,6 @@
 package model;
 
+import structure.Nodes.Node;
 import structure.Stack.Stack;
 
 import java.util.Calendar;
@@ -48,11 +49,61 @@ public class VersionController{
         return currentController.addActivity(newAct);
     }
 
+    public void proofActivities(){
+        Calendar date = Calendar.getInstance();
+        Task act1 = new Task("p1", "lele1", date, false, 0);
+        Task act2 = new Task("p2", "lele1", date, false, 0);
+        Task act3 = new Task("p3", "lele1", date, false, 0);
+        Task act4 = new Task("p4", "lele1", date, false, 0);
+        currentController.addActivity(act1);
+        currentController.addActivity(act2);
+        currentController.addActivity(act3);
+        currentController.addActivity(act4);
+
+        Reminder act5 = new Reminder("p5", "lele1", date);
+        Reminder act6 = new Reminder("p6", "lele1", date);
+        Reminder act7 = new Reminder("p7", "lele1", date);
+        Reminder act8 = new Reminder("p8", "lele1", date);
+        currentController.addActivity(act5);
+        currentController.addActivity(act6);
+        currentController.addActivity(act7);
+        currentController.addActivity(act8);
+    }
+
     public void modifyActivity(String title){
         newController("Modify element");
 
         currentController.setSomething(title);
     }
+
+    /*public HashNode<String, Activity>[] getArray(){
+        return currentController.getArray();
+    }
+
+    public PriorityQueue<Activity> getPriorityQueueLow() {
+        return currentController.getPriorityQueueLow();
+    }
+
+    public PriorityQueue<Activity> getPriorityQueueMedium() {
+        return currentController.getPriorityQueueMedium();
+    }
+
+    public PriorityQueue<Activity> getPriorityQueueHigh() {
+        return currentController.getPriorityQueueHigh();
+    }
+
+    public Queue<Activity> getTaskQueue() {
+        return currentController.getTaskQueue();
+    }*/
+
+    public Node<Activity> getTaskQueue() {
+        return currentController.getTaskQueue();
+    }
+
+    public Node<Activity> getReminderQueue() {
+        return currentController.getReminderQueue();
+    }
+
     public void getSomething(){
         currentController.getSomething();
     }
