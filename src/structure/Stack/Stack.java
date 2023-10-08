@@ -24,7 +24,7 @@ public class Stack<E> {
         if (isEmpty()) {
             throw new IllegalStateException("The stack is empty");
         }
-        E element = (E) data[size - 2];
+        E element = (E) data[size - 1];
         data[size - 1] = null;
         size--;
         return element;

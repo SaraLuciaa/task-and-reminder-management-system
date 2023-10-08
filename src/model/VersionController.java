@@ -20,7 +20,8 @@ public class VersionController{
         stack.push(currentController);
     }
     public void undoAction(){
-        currentController=stack.pop();
+        stack.pop();
+        currentController=stack.peek();
     }
 
     public String addActivity(String title, String description, Calendar date, Boolean isPriority, String priorityLevel){

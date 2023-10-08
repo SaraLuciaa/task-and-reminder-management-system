@@ -97,4 +97,40 @@ public class HashTableChainingTest extends TestCase {
         setUpStage5();
         assertEquals(task,hashTable.get("code123"));
     }
+    public void testContainsKey1(){
+        setUpStage4();
+        assertTrue(hashTable.containsKey("jua23"));
+    }
+    public void testContainsKey2(){
+        setUpStage1();
+        assertFalse(hashTable.containsKey("hel123"));
+    }
+    public void testContainsKey3(){
+        setUpStage5();
+        assertTrue(hashTable.containsKey("code12"));
+    }
+    public void testContainsKey4(){
+        setUpStage5();
+        assertFalse(hashTable.containsKey("code34"));
+    }
+    public void testHashRemove1(){
+        setUpStage5();
+        hashTable.remove("code12");
+        assertFalse(hashTable.containsKey("code12"));
+    }
+    public void testHashRemove2(){
+        setUpStage5();
+        hashTable.remove("code123");
+        assertTrue(hashTable.containsKey("code12"));
+    }
+    public void testHashRemove3(){
+        setUpStage5();
+        hashTable.remove("code123");
+        assertFalse(hashTable.containsKey("code123"));
+    }
+    public void testHashRemove4(){
+        setUpStage2();
+        hashTable.remove("asdw23");
+        assertTrue(hashTable.containsKey("sadw24"));
+    }
 }
