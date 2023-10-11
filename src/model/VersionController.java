@@ -27,20 +27,21 @@ public class VersionController{
     }
 
     public String addActivity(String title, String description, Calendar date, Boolean isPriority, String priorityLevel){
-       // newController("Add task");
+        newController("Add task");
         int priorityL = -1;
+        System.out.println(priorityLevel);
         switch (priorityLevel){
-            case "high" -> priorityL = 1;
-            case "medium" -> priorityL = 2;
-            case "low" -> priorityL = 3;
-            default -> priorityL = 0;
+            case "high" -> priorityL = 0;
+            case "medium" -> priorityL = 1;
+            case "low" -> priorityL = 2;
+            default -> priorityL = 3;
         }
         Task newAct = new Task(title,description,date,isPriority, priorityL);
         return currentController.addActivity(newAct);
     }
 
     public String addActivity(String title, String description, Calendar date){
-        // newController("Add reminder");
+        newController("Add reminder");
         Reminder newAct = new Reminder(title,description,date);
         return currentController.addActivity(newAct);
     }
@@ -60,6 +61,10 @@ public class VersionController{
     }
 
     public List<Entry<Activity>> getHighTasks() { return currentController.getHighTasks(); }
+
+    public List<Entry<Activity>> getMediumTasks() { return currentController.getMediumTasks(); }
+
+    public List<Entry<Activity>> getLowTasks() { return currentController.getLowTasks(); }
 
     public void getSomething(){
         currentController.getSomething();

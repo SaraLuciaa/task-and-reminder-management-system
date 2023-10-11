@@ -40,6 +40,12 @@ public class TaskManagementController implements Cloneable{
     public List<Entry<Activity>> getHighTasks(){
         return priorityQueueHigh.getHeap();
     }
+    public List<Entry<Activity>> getMediumTasks(){
+        return priorityQueueMedium.getHeap();
+    }
+    public List<Entry<Activity>> getLowTasks(){
+        return priorityQueueLow.getHeap();
+    }
 
     public String addActivity(Activity newAct){
         String code=keyCreator();
@@ -80,6 +86,7 @@ public class TaskManagementController implements Cloneable{
         long priority=calculatePriority(task.getDate());
         if(priorityLevel==PriorityLevel.HIGH){
             priorityQueueHigh.enqueue(task,priority);
+            getHighTasks();
         }else if(priorityLevel==PriorityLevel.MEDIUM){
             priorityQueueMedium.enqueue(task,priority);
         }else{

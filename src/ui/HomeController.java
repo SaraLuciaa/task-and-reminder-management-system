@@ -31,12 +31,12 @@ public class HomeController implements Initializable {
     @FXML private TableColumn<Activity, String> highDescription;
     @FXML private TableColumn<Activity, String> highTitle;
 
-    @FXML private TableView<Activity> mediumTasks;
+    @FXML private TableView<Activity> mediumTasks = new TableView<>();
     @FXML private TableColumn<Activity, Calendar> mediumDate;
     @FXML private TableColumn<Activity, String> mediumDescription;
     @FXML private TableColumn<Activity, String> mediumTitle;
 
-    @FXML private TableView<Activity> lowTasks;
+    @FXML private TableView<Activity> lowTasks = new TableView<>();
     @FXML private TableColumn<Activity, Calendar> lowDate;
     @FXML private TableColumn<Activity, String> lowDescription;
     @FXML private TableColumn<Activity, String> lowTitle;
@@ -100,12 +100,35 @@ public class HomeController implements Initializable {
 
         for (Entry<Activity> entry : highT) {
             highTaskList.add(entry.getItem());
-            System.out.println(entry.getItem().toString());
         }
 
         highTitle.setCellValueFactory(new PropertyValueFactory<>("tittle"));
         highDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
         highDate.setCellValueFactory(new PropertyValueFactory<>("date"));
         highTasks.setItems(highTaskList);
+
+        ObservableList<Activity> mediumTaskList = FXCollections.observableArrayList();
+        List<Entry<Activity>> mediumT = Main.vc.getMediumTasks();
+
+        for (Entry<Activity> entry : mediumT) {
+            mediumTaskList.add(entry.getItem());
+        }
+
+        mediumTitle.setCellValueFactory(new PropertyValueFactory<>("tittle"));
+        mediumDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
+        mediumDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+        mediumTasks.setItems(mediumTaskList);
+
+        ObservableList<Activity> lowTaskList = FXCollections.observableArrayList();
+        List<Entry<Activity>> lowT = Main.vc.getLowTasks();
+
+        for (Entry<Activity> entry : lowT) {
+            lowTaskList.add(entry.getItem());
+        }
+
+        lowTitle.setCellValueFactory(new PropertyValueFactory<>("tittle"));
+        lowDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
+        lowDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+        lowTasks.setItems(lowTaskList);
     }
 }
