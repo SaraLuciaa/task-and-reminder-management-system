@@ -40,6 +40,8 @@ public class TaskManagementController implements Cloneable{
             } else {
                 taskQueue.offer(task);
             }
+        }else{
+            reminderQueue.offer(newAct);
         }
         showActivities();
         return "Your activity was added with the key: " + code;
@@ -137,7 +139,15 @@ public class TaskManagementController implements Cloneable{
         Activity activity = hashTableChaining.get(keys.get(0));
         activity.setTittle(newTitle);
     }
-    public void getSomething(){
-        System.out.println(hashTableChaining.get(keys.get(0)).getTittle());
+    public Activity getSomething(){
+        return hashTableChaining.get(keys.get(0));
+    }
+
+    public Queue<Activity> getReminderQueue() {
+        return reminderQueue;
+    }
+
+    public PriorityQueue<Activity> getPriorityQueueHigh() {
+        return priorityQueueHigh;
     }
 }

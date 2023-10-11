@@ -19,9 +19,11 @@ public class VersionController{
         currentController.setAction(action);
         stack.push(currentController);
     }
-    public void undoAction(){
-        stack.pop();
-        currentController=stack.peek();
+    public void undoAction() {
+        if (stack.size() > 1){
+            stack.pop();
+            currentController = stack.peek();
+        }
     }
 
     public String addActivity(String title, String description, Calendar date, Boolean isPriority, String priorityLevel){
@@ -36,7 +38,7 @@ public class VersionController{
             default -> priorityL = 0;
         }
 
-        Task newAct = new Task(title,description,date,isPriority, priorityL);
+        Task newAct = new Task(title,description,date,isPriority, priorityL-1);
 
         return currentController.addActivity(newAct);
     }
@@ -54,13 +56,21 @@ public class VersionController{
 
         currentController.setSomething(title);
     }
-    public void getSomething(){
-        currentController.getSomething();
-    }
     public void deleteActivity(){
         newController("Delete element");
     }
+    public void getSomething(){
+        currentController.getSomething();
+    }
     public void exist(){
         currentController.exist();
+    }
+
+    public TaskManagementController getCurrentController() {
+        return currentController;
+    }
+
+    public Stack<TaskManagementController> getStack() {
+        return stack;
     }
 }
