@@ -3,12 +3,11 @@ package model;
 import structure.HashTable.HashTableChaining;
 import structure.Nodes.HashNode;
 import structure.Nodes.Node;
+import structure.Queue.Entry;
 import structure.Queue.PriorityQueue;
 import structure.Queue.Queue;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Random;
+import java.util.*;
 
 public class TaskManagementController implements Cloneable{
     private HashTableChaining<String,Activity> hashTableChaining;
@@ -32,32 +31,14 @@ public class TaskManagementController implements Cloneable{
         action = "";
     }
 
-    /* public HashNode<String, Activity>[] getArray(){
-        return hashTableChaining.getArray();
-    }
-
-    public PriorityQueue<Activity> getPriorityQueueLow() {
-        return priorityQueueLow;
-    }
-
-    public PriorityQueue<Activity> getPriorityQueueMedium() {
-        return priorityQueueMedium;
-    }
-
-    public PriorityQueue<Activity> getPriorityQueueHigh() {
-        return priorityQueueHigh;
-    }
-
-    public Queue<Activity> getTaskQueue() {
-        return taskQueue;
-    }*/
-
     public Node<Activity> getTaskQueue() {
         return taskQueue.peekNode();
     }
-
     public Node<Activity> getReminderQueue() {
         return reminderQueue.peekNode();
+    }
+    public List<Entry<Activity>> getHighTasks(){
+        return priorityQueueHigh.getHeap();
     }
 
     public String addActivity(Activity newAct){
@@ -74,7 +55,6 @@ public class TaskManagementController implements Cloneable{
         } else {
             reminderQueue.offer(newAct);
         }
-        reminderQueue.print();
         return "Your activity was added with the key: " + code;
     }
 
@@ -111,21 +91,11 @@ public class TaskManagementController implements Cloneable{
         Calendar now = Calendar.getInstance();
         return (date.getTimeInMillis() - now.getTimeInMillis()) / 1000;
     }
+
     public void exist(){
         System.out.println("\n\n\n");
         for(String k:keys){
             System.out.println(hashTableChaining.get(k));
-        }
-    }
-
-    public void showActivities(){
-        for(HashNode node : hashTableChaining.getArray()){
-            if(node!=null){
-                System.out.println(node.getValue().toString());
-                while(node.getNext()!=null){
-                    System.out.println(node.getValue().toString());
-                }
-            }
         }
     }
 

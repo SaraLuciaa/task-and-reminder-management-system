@@ -9,7 +9,7 @@ public class Task extends Activity implements Cloneable{
     public Task(String title, String description, Calendar date, boolean isPriority, int priorityLevel) {
         super(title, description, date);
         this.isPriority = isPriority;
-        this.priorityLevel = isPriority ? PriorityLevel.values()[priorityLevel] : null;
+        this.priorityLevel = PriorityLevel.values()[priorityLevel];
     }
 
     public PriorityLevel getPriorityLevel() {

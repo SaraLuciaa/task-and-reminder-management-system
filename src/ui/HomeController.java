@@ -15,16 +15,18 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import model.Activity;
 import structure.Nodes.Node;
+import structure.Queue.Entry;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.Calendar;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class HomeController implements Initializable {
     @FXML private Button addActivity;
 
-    @FXML private TableView<Activity> highTasks;
+    @FXML private TableView<Activity> highTasks = new TableView<>();
     @FXML private TableColumn<Activity, Calendar> highDate;
     @FXML private TableColumn<Activity, String> highDescription;
     @FXML private TableColumn<Activity, String> highTitle;
@@ -39,7 +41,7 @@ public class HomeController implements Initializable {
     @FXML private TableColumn<Activity, String> lowDescription;
     @FXML private TableColumn<Activity, String> lowTitle;
 
-    @FXML private TableView<Activity> nonPriorityTasks;
+    @FXML private TableView<Activity> nonPriorityTasks = new TableView<>();
     @FXML private TableColumn<Activity, Calendar> tasksDate;
     @FXML private TableColumn<Activity, String> tasksDescription;
     @FXML private TableColumn<Activity, String> tasksTitle;
@@ -58,7 +60,6 @@ public class HomeController implements Initializable {
         stage.setScene(new Scene(root));
     }
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         listReminders();
@@ -74,18 +75,14 @@ public class HomeController implements Initializable {
             reminderQ = reminderQ.getNext();
         }
 
-        reminders.setItems(reminder);
         reminderTitle.setCellValueFactory(new PropertyValueFactory<>("tittle"));
         reminderDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
         reminderDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+        reminders.setItems(reminder);
     }
 
     public void listTasks(){
-        ObservableList<Activity> highTask = FXCollections.observableArrayList();
-        ObservableList<Activity> mediumTask = FXCollections.observableArrayList();
-        ObservableList<Activity> lowTask = FXCollections.observableArrayList();
         ObservableList<Activity> nonTask = FXCollections.observableArrayList();
-
         Node<Activity> taskQ = Main.vc.getTaskQueue();
 
         while(taskQ!=null) {
@@ -93,9 +90,22 @@ public class HomeController implements Initializable {
             taskQ = taskQ.getNext();
         }
 
-        nonPriorityTasks.setItems(nonTask);
         tasksTitle.setCellValueFactory(new PropertyValueFactory<>("tittle"));
         tasksDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
         tasksDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+        nonPriorityTasks.setItems(nonTask);
+
+        ObservableList<Activity> highTaskList = FXCollections.observableArrayList();
+        List<Entry<Activity>> highT = Main.vc.getHighTasks();
+
+        for (Entry<Activity> entry : highT) {
+            highTaskList.add(entry.getItem());
+            System.out.println(entry.getItem().toString());
+        }
+
+        highTitle.setCellValueFactory(new PropertyValueFactory<>("tittle"));
+        highDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
+        highDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+        highTasks.setItems(highTaskList);
     }
 }
