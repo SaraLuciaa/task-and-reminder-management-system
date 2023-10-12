@@ -2,12 +2,10 @@ package model;
 
 import structure.HashTable.HashTableChaining;
 import structure.Nodes.HashNode;
-import structure.Nodes.Node;
-import structure.Queue.Entry;
-import structure.Queue.PriorityQueue;
-import structure.Queue.Queue;
-
-import java.util.*;
+import structure.Queue.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Random;
 
 public class TaskManagementController implements Cloneable{
     private HashTableChaining<String,Activity> hashTableChaining;
@@ -31,22 +29,6 @@ public class TaskManagementController implements Cloneable{
         action = "";
     }
 
-    public Node<Activity> getTaskQueue() {
-        return taskQueue.peekNode();
-    }
-    public Node<Activity> getReminderQueue() {
-        return reminderQueue.peekNode();
-    }
-    public List<Entry<Activity>> getHighTasks(){
-        return priorityQueueHigh.getHeap();
-    }
-    public List<Entry<Activity>> getMediumTasks(){
-        return priorityQueueMedium.getHeap();
-    }
-    public List<Entry<Activity>> getLowTasks(){
-        return priorityQueueLow.getHeap();
-    }
-
     public String addActivity(Activity newAct){
         String code=keyCreator();
         hashTableChaining.add(code,newAct);
@@ -56,11 +38,10 @@ public class TaskManagementController implements Cloneable{
             if(task.isPriority()){
                 priorityQueueAdd(task,task.getPriorityLevel());
             } else {
-                taskQueue.offer(newAct);
+                taskQueue.offer(task);
             }
-        } else {
-            reminderQueue.offer(newAct);
         }
+        showActivities();
         return "Your activity was added with the key: " + code;
     }
 
@@ -86,19 +67,16 @@ public class TaskManagementController implements Cloneable{
         long priority=calculatePriority(task.getDate());
         if(priorityLevel==PriorityLevel.HIGH){
             priorityQueueHigh.enqueue(task,priority);
-            getHighTasks();
         }else if(priorityLevel==PriorityLevel.MEDIUM){
             priorityQueueMedium.enqueue(task,priority);
         }else{
             priorityQueueLow.enqueue(task,priority);
         }
     }
-
     public long calculatePriority(Calendar date){
         Calendar now = Calendar.getInstance();
         return (date.getTimeInMillis() - now.getTimeInMillis()) / 1000;
     }
-
     public void exist(){
         System.out.println("\n\n\n");
         for(String k:keys){
@@ -106,12 +84,15 @@ public class TaskManagementController implements Cloneable{
         }
     }
 
-    public String editActivity(Activity act, Activity newAct) {
-        return "";
-    }
-
-    public String removeActivity(Activity act) {
-        return "";
+    public void showActivities(){
+        for(HashNode node : hashTableChaining.getArray()){
+            if(node!=null){
+                System.out.println(node.getValue().toString());
+                while(node.getNext()!=null){
+                    System.out.println(node.getValue().toString());
+                }
+            }
+        }
     }
 
     @Override
@@ -142,13 +123,12 @@ public class TaskManagementController implements Cloneable{
                 } while(array[i].getNext()!=null);
             }
         }
+
         return clon;
     }
-
     public String getAction() {
         return action;
     }
-
     public void setAction(String action) {
         this.action = action;
     }
@@ -157,7 +137,6 @@ public class TaskManagementController implements Cloneable{
         Activity activity = hashTableChaining.get(keys.get(0));
         activity.setTittle(newTitle);
     }
-
     public void getSomething(){
         System.out.println(hashTableChaining.get(keys.get(0)).getTittle());
     }
