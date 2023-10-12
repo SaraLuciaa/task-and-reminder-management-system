@@ -1,6 +1,5 @@
 package ui;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -9,9 +8,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import model.Activity;
+import model.Task;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.ResourceBundle;
 
@@ -37,8 +39,9 @@ public class ActivityController implements Initializable {
 
     @FXML private Button formActivity;
     @FXML private Button goBack;
+    private Activity activityToEdit;
 
-    @Override
+    @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
         task.selectedProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
@@ -92,16 +95,30 @@ public class ActivityController implements Initializable {
         calendar.set(Calendar.MONTH, date.getValue().getMonthValue() - 1);
         calendar.set(Calendar.DAY_OF_MONTH, date.getValue().getDayOfMonth());
 
-        if(task.isSelected()){
-            if(priority.isSelected()){
-                message = Main.vc.addActivity(title.getText(), description.getText(), calendar,
-                        true, ((RadioButton) PriorityLevel.getSelectedToggle()).getId());
+        if(activityToEdit == null){
+            if (task.isSelected()) {
+                if (priority.isSelected()) {
+                    message = Main.vc.addActivity(title.getText(), description.getText(), calendar,
+                            true, ((RadioButton) PriorityLevel.getSelectedToggle()).getId());
+                } else {
+                    message = Main.vc.addActivity(title.getText(), description.getText(), calendar,
+                            false, "");
+                }
             } else {
-                message = Main.vc.addActivity(title.getText(), description.getText(), calendar,
-                        false, "");
+                message = Main.vc.addActivity(title.getText(), description.getText(), calendar);
             }
         } else {
-            message = Main.vc.addActivity(title.getText(), description.getText(), calendar);
+            if (task.isSelected()) {
+                if (priority.isSelected()) {
+                    message = Main.vc.editActivity(activityToEdit, title.getText(), description.getText(), calendar,
+                            true, ((RadioButton) PriorityLevel.getSelectedToggle()).getId());
+                } else {
+                    message = Main.vc.editActivity(activityToEdit, title.getText(), description.getText(), calendar,
+                            false, "");
+                }
+            } else {
+                message = Main.vc.editActivity(activityToEdit, title.getText(), description.getText(), calendar);
+            }
         }
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -113,12 +130,12 @@ public class ActivityController implements Initializable {
 
         alert.showAndWait().ifPresent(response -> {
             if (response == buttonTypeA) {
-               title.clear();
-               description.clear();
-               date.setValue(null);
-               CategoryTask.selectToggle(null);
-               PriorityLevel.selectToggle(null);
-               isTask.selectToggle(null);
+                title.clear();
+                description.clear();
+                date.setValue(null);
+                CategoryTask.selectToggle(null);
+                PriorityLevel.selectToggle(null);
+                isTask.selectToggle(null);
             } else {
                 try {
                     Stage stage = (Stage) goBack.getScene().getWindow();
@@ -133,7 +150,29 @@ public class ActivityController implements Initializable {
         });
     }
 
-    @FXML
-    void showTaskProperties(ActionEvent event) {
+    public void setActivityToEdit(Activity selectedActivity) {
+        this.activityToEdit = selectedActivity;
+        if (activityToEdit != null) {
+            title.setText(activityToEdit.getTittle());
+            description.setText(activityToEdit.getDescription());
+            date.setValue(activityToEdit.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+            if (activityToEdit instanceof Task) {
+                isTask.selectToggle(task);
+                if (((Task) activityToEdit).isPriority()) {
+                    CategoryTask.selectToggle(priority);
+                    if (((Task) activityToEdit).getPriorityLevel() == model.PriorityLevel.HIGH) {
+                        PriorityLevel.selectToggle(high);
+                    } else if (((Task) activityToEdit).getPriorityLevel() == model.PriorityLevel.MEDIUM) {
+                        PriorityLevel.selectToggle(medium);
+                    } else if (((Task) activityToEdit).getPriorityLevel() == model.PriorityLevel.LOW) {
+                        PriorityLevel.selectToggle(low);
+                    }
+                } else {
+                    reminder.setSelected(true);
+                }
+            } else {
+                reminder.setSelected(true);
+            }
+        }
     }
 }

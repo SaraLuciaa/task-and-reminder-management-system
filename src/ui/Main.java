@@ -12,10 +12,6 @@ public class Main extends Application {
     public static VersionController vc = new VersionController();
 
     public static void main(String[] args) {
-        /*VersionController vc = new VersionController();
-        Calendar date = Calendar.getInstance();
-        vc.addActivity("Bleh", "Soy una mariposa 8:8", date);
-        vc.getReminderQueue();*/
         launch(args);
     }
 

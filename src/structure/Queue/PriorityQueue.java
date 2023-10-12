@@ -92,6 +92,22 @@ public class PriorityQueue<T> implements Cloneable{
         return heap;
     }
 
+    public void remove(T item) {
+        int index = -1;
+        for (int i = 0; i < heap.size(); i++) {
+            if (heap.get(i).item.equals(item)) {
+                index = i;
+                break;
+            }
+        }
+
+        if (index != -1) {
+            heap.set(index, heap.get(heap.size() - 1));
+            heap.remove(heap.size() - 1);
+            trickleDown(index);
+        }
+    }
+
     @Override
     public PriorityQueue<T> clone() {
         try {

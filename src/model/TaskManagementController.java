@@ -106,6 +106,14 @@ public class TaskManagementController implements Cloneable{
         }
     }
 
+    public String editActivity(Activity act, Activity newAct) {
+        return "";
+    }
+
+    public String removeActivity(Activity act) {
+        return "";
+    }
+
     @Override
     public TaskManagementController clone() {
         TaskManagementController clon = new TaskManagementController(10);

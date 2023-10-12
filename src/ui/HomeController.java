@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -25,6 +26,8 @@ import java.util.ResourceBundle;
 
 public class HomeController implements Initializable {
     @FXML private Button addActivity;
+    @FXML private Button editActivity;
+    @FXML private Button deleteActivity;
 
     @FXML private TableView<Activity> highTasks = new TableView<>();
     @FXML private TableColumn<Activity, Calendar> highDate;
@@ -52,7 +55,7 @@ public class HomeController implements Initializable {
     @FXML private TableColumn<Activity, String> reminderTitle;
 
     @FXML
-    void goToNewActivity(MouseEvent event) throws IOException {
+    void addActivity(MouseEvent event) throws IOException {
         Stage stage = (Stage) addActivity.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("new-activity.fxml"));
         Parent root = loader.load();
@@ -60,13 +63,54 @@ public class HomeController implements Initializable {
         stage.setScene(new Scene(root));
     }
 
-    @Override
+    @FXML
+    void editActivity(MouseEvent event) throws IOException {
+        if(getSelectedTable()!=null){
+            Activity selectedActivity = getSelectedTable().getSelectionModel().getSelectedItem();
+            if (selectedActivity != null) {
+                Stage stage = (Stage) editActivity.getScene().getWindow();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("new-activity.fxml"));
+                Parent root = loader.load();
+                ActivityController activityController = loader.getController();
+                activityController.setActivityToEdit(selectedActivity);
+                stage.setScene(new Scene(root));
+                stage.setTitle("Task & Reminder Management :P");
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setHeaderText("Please select an activity to edit.");
+                alert.showAndWait();
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Please select an activity to edit.");
+            alert.showAndWait();
+        }
+    }
+
+    @FXML
+    void deleteActivity(MouseEvent event) throws IOException {
+        if(getSelectedTable()!=null){
+            Activity selectedActivity = getSelectedTable().getSelectionModel().getSelectedItem();
+            if (selectedActivity != null) {
+                Main.vc.deleteActivity(selectedActivity);
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setHeaderText("Please select an activity to delete.");
+                alert.showAndWait();
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Please select an activity to delete.");
+            alert.showAndWait();
+        }
+    }
+
+    @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
         listReminders();
         listTasks();
     }
-
-    public void listReminders(){
+    private void listReminders(){
         ObservableList<Activity> reminder = FXCollections.observableArrayList();
         Node<Activity> reminderQ = Main.vc.getReminderQueue();
 
@@ -80,8 +124,7 @@ public class HomeController implements Initializable {
         reminderDate.setCellValueFactory(new PropertyValueFactory<>("date"));
         reminders.setItems(reminder);
     }
-
-    public void listTasks(){
+    private void listTasks(){
         ObservableList<Activity> nonTask = FXCollections.observableArrayList();
         Node<Activity> taskQ = Main.vc.getTaskQueue();
 
@@ -130,5 +173,19 @@ public class HomeController implements Initializable {
         lowDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
         lowDate.setCellValueFactory(new PropertyValueFactory<>("date"));
         lowTasks.setItems(lowTaskList);
+    }
+    private TableView<Activity> getSelectedTable() {
+        if (highTasks.isFocused()) {
+            return highTasks;
+        } else if (mediumTasks.isFocused()) {
+            return mediumTasks;
+        } else if (lowTasks.isFocused()) {
+            return lowTasks;
+        } else if (nonPriorityTasks.isFocused()) {
+            return nonPriorityTasks;
+        } else if (reminders.isFocused()) {
+            return reminders;
+        }
+        return null;
     }
 }

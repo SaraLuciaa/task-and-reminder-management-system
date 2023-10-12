@@ -49,7 +49,7 @@
                   <DatePicker fx:id="date" prefHeight="26.0" prefWidth="444.0" style="-fx-background-radius: 18; -fx-background-color: transparent;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <children>
-                        <RadioButton fx:id="task" layoutY="21.0" mnemonicParsing="false" onAction="#showTaskProperties" text="Task" textFill="WHITE">
+                        <RadioButton fx:id="task" layoutY="21.0" mnemonicParsing="false" text="Task" textFill="WHITE">
                            <toggleGroup>
                               <ToggleGroup fx:id="isTask" />
                            </toggleGroup></RadioButton>

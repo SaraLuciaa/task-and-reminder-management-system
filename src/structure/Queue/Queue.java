@@ -77,6 +77,28 @@ public class Queue<E> implements IQueue<E>, Cloneable{
         return result.toString();
     }
 
+    public void remove(E item) {
+        Node<E> current = front;
+        Node<E> prev = null;
+
+        while (current != null) {
+            if (current.getData().equals(item)) {
+                if (prev == null) {
+                    front = current.getNext();
+                } else {
+                    prev.setNext(current.getNext());
+                    if (current.getNext() == null) {
+                        back = prev;
+                    }
+                }
+                size--;
+                return;
+            }
+            prev = current;
+            current = current.getNext();
+        }
+    }
+
     @Override
     public Queue<E> clone() {
         try {
