@@ -12,6 +12,7 @@ public class Queue<E> implements IQueue<E>, Cloneable{
         this.back = null;
         this.size = 0;
     }
+
     @Override
     public boolean isEmpty() {
         return front == null;
