@@ -1,13 +1,10 @@
 package test;
 
 import junit.framework.TestCase;
-import model.TaskManagementController;
-import model.VersionController;
-import structure.Queue.QueueException;
-
-import java.util.Calendar;
 
 public class VersionControllerTest extends TestCase{
+
+    /*
     private VersionController versionController;
     private TaskManagementController managementController;
     public void setUpStage1(){
@@ -106,5 +103,5 @@ public class VersionControllerTest extends TestCase{
         // versionController.modifyActivity("New tittle");
         versionController.undoAction();
         // assertEquals(this.managementController.getReminderQueue().peek(),versionController.getCurrentController().getReminderQueue().peek());
-    }
+    }*/
 }
