@@ -26,6 +26,14 @@ public class Queue<E> implements IQueue<E>, Cloneable{
         return front.getData();
     }
 
+    public Node<E> peekNode(){
+        if(isEmpty()){
+            return null;
+        }
+
+        return front;
+    }
+
     @Override
     public E poll() throws QueueException {
         if(isEmpty()){
@@ -39,7 +47,7 @@ public class Queue<E> implements IQueue<E>, Cloneable{
     }
 
     @Override
-    public boolean offer(E item) {
+    public void offer(E item) {
         Node<E> node = new Node<>(item);
         if (isEmpty()){
             front = node;
@@ -49,7 +57,6 @@ public class Queue<E> implements IQueue<E>, Cloneable{
             back = node;
         }
         size++;
-        return true;
     }
 
     public int size(){
@@ -67,6 +74,28 @@ public class Queue<E> implements IQueue<E>, Cloneable{
             current = current.getNext();
         }
         return result.toString();
+    }
+
+    public void remove(E item) {
+        Node<E> current = front;
+        Node<E> prev = null;
+
+        while (current != null) {
+            if (current.getData().equals(item)) {
+                if (prev == null) {
+                    front = current.getNext();
+                } else {
+                    prev.setNext(current.getNext());
+                    if (current.getNext() == null) {
+                        back = prev;
+                    }
+                }
+                size--;
+                return;
+            }
+            prev = current;
+            current = current.getNext();
+        }
     }
 
     @Override

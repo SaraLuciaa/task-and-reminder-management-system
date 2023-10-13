@@ -6,16 +6,6 @@ import java.util.List;
 public class PriorityQueue<T> implements Cloneable{
     private List<Entry<T>> heap;
 
-    private static class Entry<T> {
-        T item;
-        long priority;
-
-        Entry(T item, long priority) {
-            this.item = item;
-            this.priority = priority;
-        }
-    }
-
     public PriorityQueue() {
         heap = new ArrayList<>();
     }
@@ -97,11 +87,31 @@ public class PriorityQueue<T> implements Cloneable{
         }
         heap.set(index, entry);
     }
+
+    public List<Entry<T>> getHeap() {
+        return heap;
+    }
+
+    public void remove(T item) {
+        int index = -1;
+        for (int i = 0; i < heap.size(); i++) {
+            if (heap.get(i).item.equals(item)) {
+                index = i;
+                break;
+            }
+        }
+
+        if (index != -1) {
+            heap.set(index, heap.get(heap.size() - 1));
+            heap.remove(heap.size() - 1);
+            trickleDown(index);
+        }
+    }
+
     @Override
     public PriorityQueue<T> clone() {
         try {
             PriorityQueue clone = (PriorityQueue) super.clone();
-            // TODO: copy mutable state here, so the clone can't change the internals of the original
             return clone;
         } catch (CloneNotSupportedException e) {
             throw new AssertionError();

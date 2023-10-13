@@ -7,11 +7,11 @@ import javafx.stage.Stage;
 import model.VersionController;
 
 import java.io.IOException;
-import java.util.Calendar;
 
 public class Main extends Application {
-    public static void main(String[] args) {
+    public static VersionController vc = new VersionController();
 
+    public static void main(String[] args) {
         launch(args);
     }
 

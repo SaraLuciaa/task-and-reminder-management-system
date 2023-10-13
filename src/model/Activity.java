@@ -1,5 +1,7 @@
 package model;
 
+import javafx.fxml.FXML;
+
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -13,14 +15,17 @@ public class Activity implements Cloneable {
         this.date=date;
     }
 
+    @FXML
     public String getTittle() {
         return tittle;
     }
 
+    @FXML
     public String getDescription() {
         return description;
     }
 
+    @FXML
     public Calendar getDate() {
         return date;
     }

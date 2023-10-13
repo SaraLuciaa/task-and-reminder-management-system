@@ -111,7 +111,7 @@
                   <Font name="Century Gothic Bold" size="18.0" />
                </font>
             </Text>
-            <Button id="addActivity" fx:id="addActivity" layoutX="242.0" mnemonicParsing="false" onMouseClicked="#goToNewActivity" prefHeight="38.0" prefWidth="266.0" style="-fx-background-radius: 18; -fx-border-radius: 18; -fx-border-color: #525d96; -fx-border-width: 3; -fx-background-color: transparent;" />
+            <Button id="addActivity" fx:id="addActivity" layoutX="242.0" mnemonicParsing="false" onMouseClicked="#addActivity" prefHeight="38.0" prefWidth="266.0" style="-fx-background-radius: 18; -fx-border-radius: 18; -fx-border-color: #525d96; -fx-border-width: 3; -fx-background-color: transparent;" />
             <Text fill="#525d96" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="- - - - - - - - - - -" textAlignment="CENTER" wrappingWidth="242.39990653991708">
                <font>
                   <Font name="Century Gothic" size="36.0" />
@@ -122,12 +122,12 @@
                   <Font name="Century Gothic" size="36.0" />
                </font>
             </Text>
-            <Button layoutX="259.0" layoutY="521.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="98.0" style="-fx-background-color: #525d96; -fx-background-radius: 18;" text="Edit" textFill="WHITE">
+            <Button fx:id="editActivity" layoutX="259.0" layoutY="521.0" mnemonicParsing="false" onMouseClicked="#editActivity" prefHeight="30.0" prefWidth="98.0" style="-fx-background-color: #525d96; -fx-background-radius: 18;" text="Edit" textFill="WHITE">
                <font>
                   <Font name="Century Gothic Bold" size="18.0" />
                </font>
             </Button>
-            <Button layoutX="393.0" layoutY="521.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="98.0" style="-fx-background-color: #525d96; -fx-background-radius: 18;" text="Delete" textFill="WHITE">
+            <Button fx:id="deleteActivity" layoutX="393.0" layoutY="521.0" mnemonicParsing="false" onMouseClicked="#deleteActivity" prefHeight="30.0" prefWidth="98.0" style="-fx-background-color: #525d96; -fx-background-radius: 18;" text="Delete" textFill="WHITE">
                <font>
                   <Font name="Century Gothic Bold" size="18.0" />
                </font>
