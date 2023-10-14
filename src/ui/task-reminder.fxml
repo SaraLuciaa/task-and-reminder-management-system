@@ -29,11 +29,11 @@
                                           <content>
                                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                                    <children>
-                                                      <TableView fx:id="highTasks" prefHeight="314.0" prefWidth="750.0">
+                                                      <TableView fx:id="highTasks" prefHeight="314.0" prefWidth="750.0" focusTraversable="false">
                                                         <columns>
-                                                          <TableColumn fx:id="highTitle" prefWidth="194.40001374483109" text="Title" />
-                                                          <TableColumn fx:id="highDescription" prefWidth="372.80003356933594" text="Description" />
-                                                            <TableColumn fx:id="highDate" prefWidth="180.0" text="Date" />
+                                                          <TableColumn fx:id="highTitle" editable="false" prefWidth="194.40001374483109" sortable="false" text="Title" />
+                                                          <TableColumn fx:id="highDescription" editable="false" prefWidth="372.80003356933594" sortable="false" text="Description" />
+                                                            <TableColumn fx:id="highDate" editable="false" prefWidth="180.0" sortable="false" text="Date" />
                                                         </columns>
                                                       </TableView>
                                                    </children>
@@ -44,11 +44,11 @@
                                           <content>
                                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                                    <children>
-                                                      <TableView fx:id="mediumTasks" prefHeight="314.0" prefWidth="750.0">
+                                                      <TableView fx:id="mediumTasks" prefHeight="314.0" prefWidth="750.0" focusTraversable="false">
                                                          <columns>
-                                                            <TableColumn fx:id="mediumTitle" prefWidth="194.40001374483109" text="Title" />
-                                                            <TableColumn fx:id="mediumDescription" prefWidth="372.80003356933594" text="Description" />
-                                                            <TableColumn fx:id="mediumDate" prefWidth="180.0" text="Date" />
+                                                            <TableColumn fx:id="mediumTitle" editable="false" prefWidth="194.40001374483109" sortable="false" text="Title" />
+                                                            <TableColumn fx:id="mediumDescription" editable="false" prefWidth="372.80003356933594" sortable="false" text="Description" />
+                                                            <TableColumn fx:id="mediumDate" editable="false" prefWidth="180.0" sortable="false" text="Date" />
                                                          </columns>
                                                       </TableView>
                                                    </children></AnchorPane>
@@ -58,11 +58,11 @@
                                           <content>
                                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                                    <children>
-                                                      <TableView fx:id="lowTasks" prefHeight="314.0" prefWidth="750.0">
+                                                      <TableView fx:id="lowTasks" prefHeight="314.0" prefWidth="750.0" focusTraversable="false">
                                                          <columns>
-                                                            <TableColumn fx:id="lowTitle" prefWidth="194.40001374483109" text="Title" />
-                                                            <TableColumn fx:id="lowDescription" prefWidth="372.80003356933594" text="Description" />
-                                                            <TableColumn fx:id="lowDate" prefWidth="180.0" text="Date" />
+                                                            <TableColumn fx:id="lowTitle" editable="false" prefWidth="194.40001374483109" sortable="false" text="Title" />
+                                                            <TableColumn fx:id="lowDescription" editable="false" prefWidth="372.80003356933594" sortable="false" text="Description" />
+                                                            <TableColumn fx:id="lowDate" editable="false" prefWidth="180.0" sortable="false" text="Date" />
                                                          </columns>
                                                       </TableView>
                                                    </children></AnchorPane>
@@ -78,7 +78,7 @@
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <TableView fx:id="nonPriorityTasks" prefHeight="395.0" prefWidth="750.0">
+                                    <TableView fx:id="nonPriorityTasks" prefHeight="395.0" prefWidth="750.0" focusTraversable="false">
                                        <columns>
                                           <TableColumn fx:id="tasksTitle" prefWidth="194.40001374483109" text="Title" />
                                           <TableColumn fx:id="tasksDescription" prefWidth="372.80003356933594" text="Description" />
@@ -92,11 +92,11 @@
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <TableView fx:id="reminders" prefHeight="397.0" prefWidth="750.0">
+                                    <TableView fx:id="reminders" prefHeight="397.0" prefWidth="750.0" focusTraversable="false">
                                        <columns>
-                                          <TableColumn fx:id="reminderTitle" prefWidth="194.40001374483109" text="Title" />
-                                          <TableColumn fx:id="reminderDescription" prefWidth="372.80003356933594" text="Description" />
-                                          <TableColumn fx:id="reminderDate" prefWidth="180.0" text="Date" />
+                                          <TableColumn fx:id="reminderTitle" editable="false" prefWidth="194.40001374483109" sortable="false" text="Title" />
+                                          <TableColumn fx:id="reminderDescription" editable="false" prefWidth="372.80003356933594" sortable="false" text="Description" />
+                                          <TableColumn fx:id="reminderDate" editable="false" prefWidth="180.0" sortable="false" text="Date" />
                                        </columns>
                                     </TableView>
                                  </children></AnchorPane>
@@ -122,12 +122,17 @@
                   <Font name="Century Gothic" size="36.0" />
                </font>
             </Text>
-            <Button fx:id="editActivity" layoutX="259.0" layoutY="521.0" mnemonicParsing="false" onMouseClicked="#editActivity" prefHeight="30.0" prefWidth="98.0" style="-fx-background-color: #525d96; -fx-background-radius: 18;" text="Edit" textFill="WHITE">
+            <Button fx:id="editActivity" layoutX="326.0" layoutY="521.0" mnemonicParsing="false" onMouseClicked="#editActivity" prefHeight="30.0" prefWidth="98.0" style="-fx-background-color: #525d96; -fx-background-radius: 18;" text="Edit" textFill="WHITE">
                <font>
                   <Font name="Century Gothic Bold" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="deleteActivity" layoutX="393.0" layoutY="521.0" mnemonicParsing="false" onMouseClicked="#deleteActivity" prefHeight="30.0" prefWidth="98.0" style="-fx-background-color: #525d96; -fx-background-radius: 18;" text="Delete" textFill="WHITE">
+            <Button fx:id="deleteActivity" layoutX="477.0" layoutY="521.0" mnemonicParsing="false" onMouseClicked="#deleteActivity" prefHeight="30.0" prefWidth="98.0" style="-fx-background-color: #525d96; -fx-background-radius: 18;" text="Delete" textFill="WHITE">
+               <font>
+                  <Font name="Century Gothic Bold" size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="undo" layoutX="175.0" layoutY="521.0" mnemonicParsing="false" onMouseClicked="#undoAction" prefHeight="30.0" prefWidth="98.0" style="-fx-background-color: #525d96; -fx-background-radius: 18;" text="Undo Action" textFill="WHITE">
                <font>
                   <Font name="Century Gothic Bold" size="18.0" />
                </font>

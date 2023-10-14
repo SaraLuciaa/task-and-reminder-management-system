@@ -50,6 +50,8 @@ public class VersionController{
     }
 
     public String editActivity(Activity act, String title, String description, Calendar date, Boolean isPriority, String priorityLevel){
+        String key = currentController.getKey(act);
+        System.out.println(key);
         newController("Edit task");
         int priorityL = -1;
         System.out.println(priorityLevel);
@@ -60,14 +62,24 @@ public class VersionController{
             default -> priorityL = 3;
         }
         Task newAct = new Task(title,description,date,isPriority, priorityL);
-        return currentController.editActivity(act, newAct);
+        return currentController.editActivity(newAct, key);
     }
 
     public String editActivity(Activity act, String title, String description, Calendar date){
+        String key = currentController.getKey(act);
+        System.out.println(key);
         newController("Edit reminder");
         Reminder newAct = new Reminder(title,description,date);
-        return currentController.editActivity(act, newAct);
+        return currentController.editActivity(newAct, key);
     }
+
+    public void deleteActivity(Activity act){
+        String key = currentController.getKey(act);
+        System.out.println(key);
+        newController("Delete activity");
+        currentController.removeActivity(key);
+    }
+
     public void deleteActivity(){
         newController("Delete element");
     }
@@ -84,11 +96,6 @@ public class VersionController{
 
     public Stack<TaskManagementController> getStack() {
         return stack;
-    }
-
-    public void deleteActivity(Activity activity){
-        newController("Delete activity");
-        currentController.removeActivity(activity);
     }
 
     public Node<Activity> getTaskQueue() {

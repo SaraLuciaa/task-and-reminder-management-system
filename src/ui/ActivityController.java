@@ -1,5 +1,7 @@
 package ui;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -13,6 +15,7 @@ import model.Task;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.ResourceBundle;
@@ -21,6 +24,8 @@ public class ActivityController implements Initializable {
     @FXML private TextField title;
     @FXML private TextArea description;
     @FXML private DatePicker date;
+    @FXML private ComboBox<String> hour;
+    @FXML private ComboBox<String> minute;
 
     @FXML private ToggleGroup isTask;
     @FXML private RadioButton reminder;
@@ -43,6 +48,20 @@ public class ActivityController implements Initializable {
 
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        ObservableList<String> hours = FXCollections.observableArrayList();
+        for (int hour = 0; hour < 24; hour++) {
+            hours.add(String.format("%02d", hour));
+        }
+        hour.setItems(hours);
+        hour.getSelectionModel().select(LocalTime.now().getHour() + "");
+
+        ObservableList<String> minutes = FXCollections.observableArrayList();
+        for (int minute = 0; minute < 60; minute++) {
+            minutes.add(String.format("%02d", minute));
+        }
+        minute.setItems(minutes);
+        minute.getSelectionModel().select(LocalTime.now().getMinute() + "");
+
         task.selectedProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
                 category.setDisable(false);
@@ -94,6 +113,8 @@ public class ActivityController implements Initializable {
         calendar.set(Calendar.YEAR, date.getValue().getYear());
         calendar.set(Calendar.MONTH, date.getValue().getMonthValue() - 1);
         calendar.set(Calendar.DAY_OF_MONTH, date.getValue().getDayOfMonth());
+        calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hour.getSelectionModel().getSelectedItem()));
+        calendar.set(Calendar.MINUTE, Integer.parseInt(minute.getSelectionModel().getSelectedItem()));
 
         if(activityToEdit == null){
             if (task.isSelected()) {
@@ -168,7 +189,7 @@ public class ActivityController implements Initializable {
                         PriorityLevel.selectToggle(low);
                     }
                 } else {
-                    reminder.setSelected(true);
+                    CategoryTask.selectToggle(non_priority);
                 }
             } else {
                 reminder.setSelected(true);

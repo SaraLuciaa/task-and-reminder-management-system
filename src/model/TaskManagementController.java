@@ -34,6 +34,7 @@ public class TaskManagementController implements Cloneable{
         action = "";
     }
 
+    // Getter
     public Node<Activity> getTaskQueue() {
         return taskQueue.peekNode();
     }
@@ -50,10 +51,10 @@ public class TaskManagementController implements Cloneable{
         return priorityQueueLow.getHeap();
     }
 
-    public String addActivity(Activity newAct){
-        String code=keyCreator();
-        hashTableChaining.add(code,newAct);
-        keys.add(code);
+    // Add, edit and remove
+    private void addActivity(String key, Activity newAct){
+        hashTableChaining.add(key,newAct);
+        keys.add(key);
         if(newAct instanceof Task){
             Task task = (Task) newAct;
             if(task.isPriority()){
@@ -64,9 +65,46 @@ public class TaskManagementController implements Cloneable{
         } else {
             reminderQueue.offer(newAct);
         }
-        return "Your activity was added with the key: " + code;
     }
 
+    public String addActivity(Activity newAct){
+        String key = keyCreator();
+        addActivity(key, newAct);
+        return "Your activity was added with the key: " + key;
+    }
+
+    public String editActivity(Activity newAct, String key) {
+        remove(key);
+        hashTableChaining.remove(key);
+        addActivity(key, newAct);
+        return "Your activity has been successfully modified";
+    }
+
+    public String removeActivity(String key){
+        remove(key);
+        hashTableChaining.remove(key);
+        return "Your activity has been successfully removed";
+    }
+
+    public void remove(String key) {
+        Activity act = hashTableChaining.get(key);
+        if(act instanceof Task){
+            Task task = (Task) act;
+            if(task.getPriorityLevel()==PriorityLevel.NON_PRIORITY){
+                taskQueue.remove(act);
+            } else if(task.getPriorityLevel()==PriorityLevel.LOW){
+                priorityQueueLow.remove(act);
+            } else if(((Task) act).getPriorityLevel()==PriorityLevel.MEDIUM){
+                priorityQueueMedium.remove(act);
+            } else {
+                priorityQueueHigh.remove(act);
+            }
+        } else {
+            reminderQueue.remove(act);
+        }
+    }
+
+    // Auxiliary methods
     public String keyCreator(){
         String validCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         Random random = new Random();
@@ -108,12 +146,20 @@ public class TaskManagementController implements Cloneable{
         }
     }
 
-    public String editActivity(Activity act, Activity newAct) {
-        return "";
-    }
-
-    public String removeActivity(Activity act) {
-        return "";
+    public String getKey(Activity act){
+        HashNode<String, Activity>[] array = hashTableChaining.getArray();
+        for (int i = 0; i < array.length; i++) {
+            if(array[i]!=null){
+                HashNode<String, Activity> current = array[i];
+                while (current!=null){
+                    if(current.getValue() == act){
+                        return current.getKey();
+                    }
+                    current = current.getNext();
+                }
+            }
+        }
+        return null;
     }
 
     @Override
@@ -125,9 +171,10 @@ public class TaskManagementController implements Cloneable{
         HashNode<String, Activity>[] array = clon.hashTableChaining.getArray();
         for (int i = 0; i < array.length; i++) {
             if (array[i] != null) {
-                do {
-                    array[i].setValue(array[i].getValue().clone());
-                    Activity act = array[i].getValue();
+                HashNode<String, Activity> current = array[i];
+                while (current!=null) {
+                    current.setValue(current.getValue().clone());
+                    Activity act = current.getValue();
                     if(act instanceof Task){
                         if(((Task) act).getPriorityLevel()==PriorityLevel.NON_PRIORITY){
                             clon.taskQueue.offer(act);
@@ -141,7 +188,8 @@ public class TaskManagementController implements Cloneable{
                     } else {
                         clon.reminderQueue.offer(act);
                     }
-                } while(array[i].getNext()!=null);
+                    current = current.getNext();
+                }
             }
         }
         return clon;

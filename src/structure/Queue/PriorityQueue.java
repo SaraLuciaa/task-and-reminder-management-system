@@ -94,7 +94,9 @@ public class PriorityQueue<T> implements Cloneable{
 
     public void remove(T item) {
         int index = -1;
-        for (int i = 0; i < heap.size(); i++) {
+        int size = heap.size();
+
+        for (int i = 0; i < size; i++) {
             if (heap.get(i).item.equals(item)) {
                 index = i;
                 break;
@@ -102,8 +104,8 @@ public class PriorityQueue<T> implements Cloneable{
         }
 
         if (index != -1) {
-            heap.set(index, heap.get(heap.size() - 1));
-            heap.remove(heap.size() - 1);
+            heap.set(index, heap.get(size - 1));
+            heap.remove(size - 1);
             trickleDown(index);
         }
     }
