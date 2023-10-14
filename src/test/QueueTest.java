@@ -39,7 +39,7 @@ public class QueueTest extends TestCase {
     public void testPeek3() throws QueueException{
         setUpStage3();
         queue.poll();
-        assertEquals(Integer.valueOf(2),queue.poll());
+        assertEquals(Integer.valueOf(2),queue.peek());
     }
     public void testOffer1(){
         setUpStage1();
@@ -66,6 +66,18 @@ public class QueueTest extends TestCase {
         setUpStage3();
         queue.poll();
         queue.offer(4);
+        assertEquals(3,queue.size());
+    }
+    public void testSize1(){
+        setUpStage1();
+        assertEquals(0,queue.size());
+    }
+    public void testSize2(){
+        setUpStage2();
+        assertEquals(1,queue.size());
+    }
+    public void testSize3(){
+        setUpStage3();
         assertEquals(3,queue.size());
     }
 }
