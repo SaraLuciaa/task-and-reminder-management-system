@@ -9,6 +9,7 @@ import java.util.Calendar;
 public class PriorityQueueTest extends TestCase{
     private PriorityQueue<Task> priorityQueue;
     private Task task;
+    private Task task2;
     public long calculatePriority(Calendar date){
         Calendar now = Calendar.getInstance();
         return (date.getTimeInMillis() - now.getTimeInMillis()) / 1000;
@@ -41,6 +42,7 @@ public class PriorityQueueTest extends TestCase{
         date.set(2024,Calendar.DECEMBER,13,0,0);
         Task task2=new Task("Task 2", "We are adding a task", date,true,0);
         this.task=task;
+        this.task2 = task2;
         priorityQueue.enqueue(task2,calculatePriority(date));
     }
     public void testIsEmpty1(){
@@ -83,6 +85,10 @@ public class PriorityQueueTest extends TestCase{
         priorityQueue.dequeue();
         assertEquals(1,priorityQueue.size());
     }
+    public void testDequeue3(){
+        setUpStage1();
+        assertNull(priorityQueue.dequeue());
+    }
     public void testPeek1(){
         setUpStage2();
         assertEquals(task,priorityQueue.peek());
@@ -97,6 +103,21 @@ public class PriorityQueueTest extends TestCase{
         date.set(2023,Calendar.NOVEMBER,13,0,0);
         Task task=new Task("Task 6", "We are adding a task", date,true,0);
         priorityQueue.enqueue(task,calculatePriority(date));
+        assertEquals(task,priorityQueue.peek());
+    }
+    public void testRemove1(){
+        setUpStage2();
+        priorityQueue.remove(task);
+        assertEquals(0,priorityQueue.size());
+    }
+    public void testRemove2(){
+        setUpStage4();
+        priorityQueue.remove(task);
+        assertEquals(task2,priorityQueue.peek());
+    }
+    public void testRemove3(){
+        setUpStage4();
+        priorityQueue.remove(task2);
         assertEquals(task,priorityQueue.peek());
     }
 }

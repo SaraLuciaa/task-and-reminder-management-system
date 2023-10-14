@@ -23,7 +23,7 @@ public class PriorityQueue<T> implements Cloneable{
 
     public T dequeue() {
         if (isEmpty()) {
-            throw new IllegalStateException("The priority queue is empty.");
+            return null;
         }
 
         Entry<T> top = heap.get(0);

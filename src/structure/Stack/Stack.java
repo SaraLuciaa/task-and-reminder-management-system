@@ -22,7 +22,7 @@ public class Stack<E> {
 
     public E pop() {
         if (isEmpty()) {
-            throw new IllegalStateException("The stack is empty");
+            return null;
         }
         E element = (E) data[size - 1];
         data[size - 1] = null;
@@ -32,7 +32,7 @@ public class Stack<E> {
 
     public E peek() {
         if (isEmpty()) {
-            throw new IllegalStateException("The stack is empty");
+            return null;
         }
         return (E) data[size - 1];
     }

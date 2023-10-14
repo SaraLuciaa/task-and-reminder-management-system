@@ -74,6 +74,18 @@ public class HashTableChainingTest extends TestCase {
         int key=Math.abs("sadw24".hashCode() % 10);
         assertEquals(task,hashTable.getArray()[key].getValue());
     }
+    public void testAddHashTable3(){
+        setUpStage1();
+        Reminder reminder1=new Reminder("Reminder 4", "We are adding a reminder", Calendar.getInstance());
+        hashTable.add("loi23",reminder1);
+        assertTrue(hashTable.containsKey("loi23"));
+    }
+    public void testAddHashTable4(){
+        setUpStage3();
+        Reminder reminder1=new Reminder("Reminder 6", "We are adding a reminder", Calendar.getInstance());
+        hashTable.add("lde23",reminder1);
+        assertTrue(hashTable.containsKey("lde23"));
+    }
     public void testHashTableChaining1(){
         setUpStage3();
         int key=Math.abs("asdw23".hashCode() % 10);
@@ -96,6 +108,10 @@ public class HashTableChainingTest extends TestCase {
     public void testGetHash2(){
         setUpStage5();
         assertEquals(task,hashTable.get("code123"));
+    }
+    public void testGetHash3(){
+        setUpStage1();
+        assertNull(hashTable.get("hji123"));
     }
     public void testContainsKey1(){
         setUpStage4();

@@ -2,7 +2,6 @@ package test;
 
 import junit.framework.TestCase;
 import structure.Queue.Queue;
-import structure.Queue.QueueException;
 
 public class QueueTest extends TestCase {
     private Queue<Integer> queue;
@@ -28,15 +27,20 @@ public class QueueTest extends TestCase {
         setUpStage2();
         assertFalse(queue.isEmpty());
     }
-    public void testPeek1() throws QueueException {
+    public void testIsEmpty3(){
+        setUpStage2();
+        queue.poll();
+        assertTrue(queue.isEmpty());
+    }
+    public void testPeek1(){
         setUpStage2();
         assertEquals(Integer.valueOf(1),queue.peek());
     }
-    public void testPeek2() throws QueueException {
+    public void testPeek2(){
         setUpStage3();
         assertEquals(Integer.valueOf(1),queue.peek());
     }
-    public void testPeek3() throws QueueException{
+    public void testPeek3(){
         setUpStage3();
         queue.poll();
         assertEquals(Integer.valueOf(2),queue.peek());
@@ -52,17 +56,23 @@ public class QueueTest extends TestCase {
         queue.offer(6);
         assertEquals(3,queue.size());
     }
-    public void testPoll1() throws QueueException {
+    public void testOffer3(){
+        setUpStage2();
+        queue.poll();
+        queue.offer(7);
+        assertEquals(1,queue.size());
+    }
+    public void testPoll1(){
         setUpStage2();
         queue.poll();
         assertEquals(0,queue.size());
     }
-    public void testPoll2() throws QueueException {
+    public void testPoll2(){
         setUpStage3();
         queue.poll();
         assertEquals(2,queue.size());
     }
-    public void testPoll3() throws QueueException{
+    public void testPoll3(){
         setUpStage3();
         queue.poll();
         queue.offer(4);
@@ -79,5 +89,25 @@ public class QueueTest extends TestCase {
     public void testSize3(){
         setUpStage3();
         assertEquals(3,queue.size());
+    }
+    public void testRemove1(){
+        setUpStage2();
+        queue.remove(1);
+        assertEquals(0,queue.size());
+    }
+    public void testRemove2(){
+        setUpStage3();
+        queue.remove(4);
+        assertEquals(3,queue.size());
+    }
+    public void testRemove3(){
+        setUpStage3();
+        queue.remove(1);
+        assertEquals(Integer.valueOf(2),queue.peek());
+    }
+    public void testRemove4(){
+        setUpStage3();
+        queue.remove(3);
+        assertEquals(Integer.valueOf(1),queue.peek());
     }
 }

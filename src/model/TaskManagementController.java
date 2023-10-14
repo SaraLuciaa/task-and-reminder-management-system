@@ -187,19 +187,15 @@ public class TaskManagementController implements Cloneable{
         }
         return clon;
     }
-
     public String getAction() {
         return action;
     }
-
     public void setAction(String action) {
         this.action = action;
     }
-
     public Activity getSomething(){
         return hashTableChaining.get(keys.get(0));
     }
-
     public PriorityQueue<Activity> getPriorityQueueHigh() {
         return priorityQueueHigh;
     }

@@ -19,9 +19,9 @@ public class Queue<E> implements IQueue<E>, Cloneable{
     }
 
     @Override
-    public E peek() throws QueueException {
+    public E peek(){
         if(isEmpty()){
-            throw new QueueException("Queue is empty.");
+            return null;
         }
 
         return front.getData();
@@ -36,9 +36,9 @@ public class Queue<E> implements IQueue<E>, Cloneable{
     }
 
     @Override
-    public E poll() throws QueueException {
+    public E poll(){
         if(isEmpty()){
-            throw new QueueException("Queue is empty.");
+            return null;
         }
 
         E head = front.getData();
