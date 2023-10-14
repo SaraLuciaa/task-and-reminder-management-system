@@ -196,11 +196,6 @@ public class TaskManagementController implements Cloneable{
         this.action = action;
     }
 
-    public void setSomething(String newTitle){
-        Activity activity = hashTableChaining.get(keys.get(0));
-        activity.setTittle(newTitle);
-    }
-
     public Activity getSomething(){
         return hashTableChaining.get(keys.get(0));
     }

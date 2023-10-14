@@ -39,7 +39,7 @@ public class PriorityQueue<T> implements Cloneable{
 
     public T peek() {
         if (isEmpty()) {
-            throw new IllegalStateException("The priority queue is empty.");
+            return null;
         }
         return heap.get(0).item;
     }
