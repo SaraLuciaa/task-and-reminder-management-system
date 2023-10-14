@@ -79,15 +79,8 @@ public class VersionController{
         newController("Delete activity");
         currentController.removeActivity(key);
     }
-
-    public void deleteActivity(){
-        newController("Delete element");
-    }
     public void getSomething(){
         currentController.getSomething();
-    }
-    public void exist(){
-        currentController.exist();
     }
 
     public TaskManagementController getCurrentController() {

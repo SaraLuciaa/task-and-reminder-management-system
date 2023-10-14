@@ -102,11 +102,12 @@ public class PriorityQueue<T> implements Cloneable{
                 break;
             }
         }
-
         if (index != -1) {
             heap.set(index, heap.get(size - 1));
             heap.remove(size - 1);
-            trickleDown(index);
+            if(index != size-1) {
+                trickleDown(index);
+            }
         }
     }
 
