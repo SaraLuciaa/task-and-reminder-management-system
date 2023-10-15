@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="820.0" style="-fx-background-color: #192442;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.ActivityController">
+   <children>
+      <AnchorPane layoutX="34.0" layoutY="36.0" prefHeight="550.0" prefWidth="750.0">
+         <children>
+            <Text fill="#525d96" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -" textAlignment="CENTER" wrappingWidth="750.4000000000001">
+               <font>
+                  <Font name="Century Gothic" size="36.0" />
+               </font>
+            </Text>
+            <Button id="addActivity" fx:id="goBack" mnemonicParsing="false" onMouseClicked="#goHome" prefHeight="38.0" prefWidth="146.0" style="-fx-background-radius: 18; -fx-border-radius: 18; -fx-border-color: #525d96; -fx-border-width: 3; -fx-background-color: #192442;" text="Go back" textFill="WHITE">
+               <font>
+                  <Font name="Century Gothic Bold" size="18.0" />
+               </font>
+            </Button>
+            <GridPane alignment="TOP_CENTER" layoutX="86.0" layoutY="65.0" prefHeight="420.0" prefWidth="577.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="291.9999755859375" minWidth="10.0" prefWidth="144.60001220703126" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="456.6" minWidth="10.0" prefWidth="450.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="109.2" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="143.60000000000002" minHeight="0.0" prefHeight="123.60000000000001" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="153.20000000000002" minHeight="0.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="148.79999999999998" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="149.1999694824219" minHeight="0.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="130.79999999999998" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <TextField fx:id="title" style="-fx-background-radius: 18;" GridPane.columnIndex="1">
+                     <font>
+                        <Font name="Century Gothic" size="12.0" />
+                     </font></TextField>
+                  <DatePicker fx:id="date" prefHeight="26.0" prefWidth="444.0" style="-fx-background-radius: 18; -fx-background-color: transparent;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <children>
+                        <RadioButton fx:id="task" layoutY="21.0" mnemonicParsing="false" text="Task" textFill="WHITE">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="isTask" />
+                           </toggleGroup></RadioButton>
+                        <RadioButton fx:id="reminder" layoutX="187.0" layoutY="21.0" mnemonicParsing="false" text="Reminder" textFill="WHITE" toggleGroup="$isTask" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="29.0" prefWidth="297.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <children>
+                        <RadioButton fx:id="priority" disable="true" layoutY="21.0" mnemonicParsing="false" text="Priority" textFill="WHITE">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="CategoryTask" />
+                           </toggleGroup></RadioButton>
+                        <RadioButton fx:id="non_priority" disable="true" layoutX="187.0" layoutY="21.0" mnemonicParsing="false" text="Non-priority" textFill="WHITE" toggleGroup="$CategoryTask" />
+                     </children>
+                  </AnchorPane>
+                  <Label text="Title" textFill="WHITE">
+                     <font>
+                        <Font name="Century Gothic Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="23.0" prefWidth="182.0" text="Description" textFill="WHITE" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="Century Gothic Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label text="Date" textFill="WHITE" GridPane.rowIndex="2">
+                     <font>
+                        <Font name="Century Gothic Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label text="Activity" textFill="WHITE" GridPane.rowIndex="3">
+                     <font>
+                        <Font name="Century Gothic Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="category" disable="true" text="Category" textFill="WHITE" GridPane.rowIndex="4">
+                     <font>
+                        <Font name="Century Gothic Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="priorityLevel" disable="true" text="Priority level" textFill="WHITE" GridPane.rowIndex="5">
+                     <font>
+                        <Font name="Century Gothic Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                     <children>
+                        <RadioButton fx:id="high" disable="true" layoutY="21.0" mnemonicParsing="false" text="High" textFill="WHITE">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="PriorityLevel" />
+                           </toggleGroup></RadioButton>
+                        <RadioButton fx:id="medium" disable="true" layoutX="187.0" layoutY="21.0" mnemonicParsing="false" text="Medium" textFill="WHITE" toggleGroup="$PriorityLevel" />
+                        <RadioButton fx:id="low" disable="true" layoutX="398.0" layoutY="21.0" mnemonicParsing="false" text="Low" textFill="WHITE" toggleGroup="$PriorityLevel" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-radius: 18; -fx-background-color: transparent;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <children>
+                        <TextArea fx:id="description" layoutY="7.0" prefHeight="106.0" prefWidth="442.0" style="-fx-background-radius: 18; -fx-border-radius: 18;" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </GridPane>
+            <Button id="addActivity" fx:id="formActivity" layoutX="302.0" layoutY="497.0" mnemonicParsing="false" onMouseClicked="#saveActivity" prefHeight="38.0" prefWidth="146.0" style="-fx-background-radius: 18; -fx-border-radius: 18; -fx-border-color: #525d96; -fx-border-width: 3; -fx-background-color: #525d96;" text="Save" textFill="WHITE">
+               <font>
+                  <Font name="Century Gothic Bold" size="18.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
