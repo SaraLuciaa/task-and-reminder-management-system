@@ -135,4 +135,15 @@ public class Queue<E> implements IQueue<E>, Cloneable{
             throw new AssertionError();
         }
     }
+
+    public boolean contains(E existingAct) {
+        Node<E> current = front;
+        while (current != null) {
+            if (current.getData().equals(existingAct)) {
+                return true;
+            }
+            current = current.getNext();
+        }
+        return false;
+    }
 }
