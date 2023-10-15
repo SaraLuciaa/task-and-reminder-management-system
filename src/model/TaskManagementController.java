@@ -74,12 +74,10 @@ public class TaskManagementController implements Cloneable{
             return "Activity not found with key: " + key;
         }
 
-        // Update the existing activity with the new data
         existingActivity.setTittle(newAct.getTittle());
         existingActivity.setDescription(newAct.getDescription());
         existingActivity.setDate(newAct.getDate());
 
-        // Check if it's a task with priority
         if (existingActivity instanceof Task) {
             Task existingTask = (Task) existingActivity;
             if (existingTask.isPriority()) {
