@@ -2,7 +2,7 @@ package model;
 
 import java.util.Calendar;
 
-public class Task extends Activity implements Cloneable{
+public class Task extends Activity implements Cloneable, Comparable<Activity> {
     private PriorityLevel priorityLevel;
     private boolean isPriority;
 

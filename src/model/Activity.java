@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-public class Activity implements Cloneable {
+public abstract class Activity implements Cloneable,  Comparable<Activity> {
     private String tittle;
     private String description;
     private Calendar date;
@@ -34,6 +34,7 @@ public class Activity implements Cloneable {
         return date;
     }
 
+
     @FXML
     public String getFormattedDate() {
         return formattedDate;
@@ -60,6 +61,11 @@ public class Activity implements Cloneable {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         String formattedDate = sdf.format(date.getTime());
         return formattedDate;
+    }
+
+    @Override
+    public int compareTo(Activity other) {
+        return this.date.compareTo(other.date);
     }
 
     @Override

@@ -1,7 +1,6 @@
 package model;
 
 import structure.Nodes.Node;
-import structure.Queue.Entry;
 import structure.Stack.Stack;
 
 import java.util.Calendar;
@@ -91,9 +90,9 @@ public class VersionController{
         return currentController.getReminderQueue();
     }
 
-    public List<Entry<Activity>> getHighTasks() { return currentController.getHighTasks(); }
+    public List<Activity> getHighTasks() { return currentController.getHighTasks(); }
 
-    public List<Entry<Activity>> getMediumTasks() { return currentController.getMediumTasks(); }
+    public List<Activity> getMediumTasks() { return currentController.getMediumTasks(); }
 
-    public List<Entry<Activity>> getLowTasks() { return currentController.getLowTasks(); }
+    public List<Activity> getLowTasks() { return currentController.getLowTasks(); }
 }

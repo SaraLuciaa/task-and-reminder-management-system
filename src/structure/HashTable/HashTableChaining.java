@@ -2,6 +2,8 @@ package structure.HashTable;
 
 import structure.Nodes.HashNode;
 
+import java.util.ArrayList;
+
 public class HashTableChaining<K, V extends Cloneable> implements IHashTable<K, V>,Cloneable{
     private HashNode<K, V>[] array;
     private int size;
@@ -72,6 +74,18 @@ public class HashTableChaining<K, V extends Cloneable> implements IHashTable<K, 
             currentNode = currentNode.getNext();
         }
         return false;
+    }
+
+    public ArrayList<K> getAllKeys() {
+        ArrayList<K> keys = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            HashNode<K, V> currentNode = array[i];
+            while (currentNode != null) {
+                keys.add(currentNode.getKey());
+                currentNode = currentNode.getNext();
+            }
+        }
+        return keys;
     }
 
     @Override

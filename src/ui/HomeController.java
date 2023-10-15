@@ -16,7 +16,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import model.Activity;
 import structure.Nodes.Node;
-import structure.Queue.Entry;
 
 import java.io.IOException;
 import java.net.URL;
@@ -154,10 +153,10 @@ public class HomeController implements Initializable {
         nonPriorityTasks.setItems(nonTask);
 
         ObservableList<Activity> highTaskList = FXCollections.observableArrayList();
-        List<Entry<Activity>> highT = Main.vc.getHighTasks();
+        List<Activity> highT = Main.vc.getHighTasks();
 
-        for (Entry<Activity> entry : highT) {
-            highTaskList.add(entry.getItem());
+        for (Activity entry : highT) {
+            highTaskList.add(entry);
         }
 
         highTitle.setCellValueFactory(new PropertyValueFactory<>("tittle"));
@@ -166,10 +165,10 @@ public class HomeController implements Initializable {
         highTasks.setItems(highTaskList);
 
         ObservableList<Activity> mediumTaskList = FXCollections.observableArrayList();
-        List<Entry<Activity>> mediumT = Main.vc.getMediumTasks();
+        List<Activity> mediumT = Main.vc.getMediumTasks();
 
-        for (Entry<Activity> entry : mediumT) {
-            mediumTaskList.add(entry.getItem());
+        for (Activity entry : mediumT) {
+            mediumTaskList.add(entry);
         }
 
         mediumTitle.setCellValueFactory(new PropertyValueFactory<>("tittle"));
@@ -178,10 +177,10 @@ public class HomeController implements Initializable {
         mediumTasks.setItems(mediumTaskList);
 
         ObservableList<Activity> lowTaskList = FXCollections.observableArrayList();
-        List<Entry<Activity>> lowT = Main.vc.getLowTasks();
+        List<Activity> lowT = Main.vc.getLowTasks();
 
-        for (Entry<Activity> entry : lowT) {
-            lowTaskList.add(entry.getItem());
+        for (Activity entry : lowT) {
+            lowTaskList.add(entry);
         }
 
         lowTitle.setCellValueFactory(new PropertyValueFactory<>("tittle"));
