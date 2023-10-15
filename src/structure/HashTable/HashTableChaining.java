@@ -2,6 +2,8 @@ package structure.HashTable;
 
 import structure.Nodes.HashNode;
 
+import java.util.ArrayList;
+
 public class HashTableChaining<K, V extends Cloneable> implements IHashTable<K, V>,Cloneable{
     private HashNode<K, V>[] array;
     private int size;
@@ -48,6 +50,18 @@ public class HashTableChaining<K, V extends Cloneable> implements IHashTable<K, 
         return null;
     }
 
+    public void set(K key, V newValue) {
+        int index = hash(key);
+        HashNode<K, V> currentNode = array[index];
+        while (currentNode != null) {
+            if (currentNode.getKey().equals(key)) {
+                currentNode.setValue(newValue);
+                currentNode.getValue();
+            }
+            currentNode = currentNode.getNext();
+        }
+    }
+
     @Override
     public boolean containsKey(K key) {
         int index = hash(key);
@@ -59,6 +73,17 @@ public class HashTableChaining<K, V extends Cloneable> implements IHashTable<K, 
             currentNode = currentNode.getNext();
         }
         return false;
+    }
+    public ArrayList<K> getAllKeys() {
+        ArrayList<K> keys = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            HashNode<K, V> currentNode = array[i];
+            while (currentNode != null) {
+                keys.add(currentNode.getKey());
+                currentNode = currentNode.getNext();
+            }
+        }
+        return keys;
     }
 
     @Override

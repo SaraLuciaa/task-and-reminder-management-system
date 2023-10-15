@@ -27,6 +27,11 @@ public class StackTest extends TestCase {
         setUpStage2();
         assertFalse(stack.isEmpty());
     }
+    public void testIsEmpty3(){
+        setUpStage2();
+        stack.pop();
+        assertTrue(stack.isEmpty());
+    }
     public void testSize1(){
         setUpStage3();
         assertEquals(3,stack.size());
@@ -36,6 +41,11 @@ public class StackTest extends TestCase {
         stack.pop();
         assertEquals(2,stack.size());
     }
+    public void testSize3(){
+        setUpStage2();
+        stack.pop();
+        assertEquals(0,stack.size());
+    }
     public void testPush1(){
         setUpStage1();
         stack.push(5);
@@ -44,6 +54,12 @@ public class StackTest extends TestCase {
     public void testPush2(){
         setUpStage3();
         assertEquals(3,stack.size());
+    }
+    public void testPush3(){
+        setUpStage2();
+        stack.pop();
+        stack.push(7);
+        assertEquals(1,stack.size());
     }
     public void testPop1(){
         setUpStage2();
@@ -55,6 +71,10 @@ public class StackTest extends TestCase {
         stack.pop();
         assertEquals(2,stack.size());
     }
+    public void testPop3(){
+        setUpStage1();
+        assertNull(stack.pop());
+    }
     public void testPeek1(){
         setUpStage2();
         assertEquals(Integer.valueOf(1),stack.peek());
@@ -63,5 +83,9 @@ public class StackTest extends TestCase {
         setUpStage3();
         stack.pop();
         assertEquals(Integer.valueOf(3),stack.peek());
+    }
+    public void testPeek3(){
+        setUpStage1();
+        assertNull(stack.peek());
     }
 }

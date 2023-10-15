@@ -3,8 +3,8 @@ package structure.Queue;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PriorityQueue<T> implements Cloneable{
-    private List<Entry<T>> heap;
+public class PriorityQueue<T extends Comparable<T>> implements Cloneable {
+    private List<T> heap;
 
     public PriorityQueue() {
         heap = new ArrayList<>();
@@ -14,104 +14,111 @@ public class PriorityQueue<T> implements Cloneable{
         return heap.isEmpty();
     }
 
-    public void enqueue(T item, long priority) {
-        Entry<T> entry = new Entry<>(item, priority);
-        heap.add(entry);
+    public void enqueue(T item) {
+        heap.add(item);
         int index = heap.size() - 1;
-        bubbleUp(index);
+        heapSort();
+    }
+
+    public void heapSort() {
+        int n = heap.size();
+
+        for (int i = n / 2 - 1; i >= 0; i--) {
+            minHeapify(n, i);
+        }
+
+        List<T> sortedList = new ArrayList<>();
+        for (int i = n - 1; i >= 0; i--) {
+            T item = heap.get(0);
+            sortedList.add(item);
+            heap.set(0, heap.get(i));
+            minHeapify(i, 0);
+        }
+
+        heap.clear();
+        heap.addAll(sortedList);
+    }
+
+    private void minHeapify(int n, int i) {
+        int smallest = i;
+        int leftChild = 2 * i + 1;
+        int rightChild = 2 * i + 2;
+
+        if (leftChild < n && heap.get(leftChild).compareTo(heap.get(smallest)) < 0) {
+            smallest = leftChild;
+        }
+
+        if (rightChild < n && heap.get(rightChild).compareTo(heap.get(smallest)) < 0) {
+            smallest = rightChild;
+        }
+
+        if (smallest != i) {
+            T temp = heap.get(i);
+            heap.set(i, heap.get(smallest));
+            heap.set(smallest, temp);
+
+            minHeapify(n, smallest);
+        }
     }
 
     public T dequeue() {
         if (isEmpty()) {
-            throw new IllegalStateException("The priority queue is empty.");
+            return null;
         }
 
-        Entry<T> top = heap.get(0);
-        Entry<T> last = heap.remove(heap.size() - 1);
+        T top = heap.get(0);
+        T last = heap.remove(heap.size() - 1);
 
         if (!isEmpty()) {
             heap.set(0, last);
-            trickleDown(0);
+            heapSort();
         }
 
-        return top.item;
+        return top;
     }
 
     public T peek() {
         if (isEmpty()) {
-            throw new IllegalStateException("The priority queue is empty.");
+            return null;
         }
-        return heap.get(0).item;
+        return heap.get(0);
     }
 
     public int size() {
         return heap.size();
     }
 
-    private void bubbleUp(int index) {
-        Entry<T> entry = heap.get(index);
-        while (index > 0) {
-            int parentIndex = (index - 1) / 2;
-            Entry<T> parentEntry = heap.get(parentIndex);
-            if (entry.priority >= parentEntry.priority) {
-                break;
-            }
-            heap.set(index, parentEntry);
-            index = parentIndex;
-        }
-        heap.set(index, entry);
-    }
-
-    private void trickleDown(int index) {
-        int size = heap.size();
-        Entry<T> entry = heap.get(index);
-        while (true) {
-            int leftChildIndex = 2 * index + 1;
-            int rightChildIndex = 2 * index + 2;
-            int minIndex = index;
-
-            if (leftChildIndex < size && heap.get(leftChildIndex).priority < heap.get(minIndex).priority) {
-                minIndex = leftChildIndex;
-            }
-
-            if (rightChildIndex < size && heap.get(rightChildIndex).priority < heap.get(minIndex).priority) {
-                minIndex = rightChildIndex;
-            }
-
-            if (minIndex == index) {
-                break;
-            }
-
-            heap.set(index, heap.get(minIndex));
-            index = minIndex;
-        }
-        heap.set(index, entry);
-    }
-
-    public List<Entry<T>> getHeap() {
+    public List<T> getHeap() {
         return heap;
     }
 
     public void remove(T item) {
         int index = -1;
+
         for (int i = 0; i < heap.size(); i++) {
-            if (heap.get(i).item.equals(item)) {
+            if (heap.get(i).equals(item)) {
                 index = i;
                 break;
             }
         }
 
         if (index != -1) {
-            heap.set(index, heap.get(heap.size() - 1));
-            heap.remove(heap.size() - 1);
-            trickleDown(index);
+            int lastIndex = heap.size() - 1;
+            if (index != lastIndex) {
+                heap.set(index, heap.get(lastIndex));
+                heap.remove(lastIndex);
+                heapSort();
+            } else {
+                heap.remove(index);
+            }
         }
     }
 
     @Override
     public PriorityQueue<T> clone() {
         try {
-            PriorityQueue clone = (PriorityQueue) super.clone();
+            PriorityQueue<T> clone = (PriorityQueue<T>) super.clone();
+            clone.heap = new ArrayList<>(heap);
             return clone;
         } catch (CloneNotSupportedException e) {
             throw new AssertionError();

@@ -1,7 +1,6 @@
 package model;
 
 import structure.Nodes.Node;
-import structure.Queue.Entry;
 import structure.Stack.Stack;
 
 import java.util.Calendar;
@@ -32,7 +31,6 @@ public class VersionController{
     public String addActivity(String title, String description, Calendar date, Boolean isPriority, String priorityLevel){
         newController("Add task");
         int priorityL = -1;
-        System.out.println(priorityLevel);
         switch (priorityLevel){
             case "high" -> priorityL = 0;
             case "medium" -> priorityL = 1;
@@ -50,9 +48,9 @@ public class VersionController{
     }
 
     public String editActivity(Activity act, String title, String description, Calendar date, Boolean isPriority, String priorityLevel){
+        String key = currentController.getKey(act);
         newController("Edit task");
         int priorityL = -1;
-        System.out.println(priorityLevel);
         switch (priorityLevel){
             case "high" -> priorityL = 0;
             case "medium" -> priorityL = 1;
@@ -60,22 +58,20 @@ public class VersionController{
             default -> priorityL = 3;
         }
         Task newAct = new Task(title,description,date,isPriority, priorityL);
-        return currentController.editActivity(act, newAct);
+        return currentController.editActivity(newAct, key);
     }
 
     public String editActivity(Activity act, String title, String description, Calendar date){
+        String key = currentController.getKey(act);
         newController("Edit reminder");
         Reminder newAct = new Reminder(title,description,date);
-        return currentController.editActivity(act, newAct);
+        return currentController.editActivity(newAct, key);
     }
-    public void deleteActivity(){
-        newController("Delete element");
-    }
-    public void getSomething(){
-        currentController.getSomething();
-    }
-    public void exist(){
-        currentController.exist();
+
+    public void deleteActivity(Activity act){
+        String key = currentController.getKey(act);
+        newController("Delete activity");
+        currentController.removeActivity(key);
     }
 
     public TaskManagementController getCurrentController() {
@@ -86,11 +82,6 @@ public class VersionController{
         return stack;
     }
 
-    public void deleteActivity(Activity activity){
-        newController("Delete activity");
-        currentController.removeActivity(activity);
-    }
-
     public Node<Activity> getTaskQueue() {
         return currentController.getTaskQueue();
     }
@@ -99,9 +90,9 @@ public class VersionController{
         return currentController.getReminderQueue();
     }
 
-    public List<Entry<Activity>> getHighTasks() { return currentController.getHighTasks(); }
+    public List<Activity> getHighTasks() { return currentController.getHighTasks(); }
 
-    public List<Entry<Activity>> getMediumTasks() { return currentController.getMediumTasks(); }
+    public List<Activity> getMediumTasks() { return currentController.getMediumTasks(); }
 
-    public List<Entry<Activity>> getLowTasks() { return currentController.getLowTasks(); }
+    public List<Activity> getLowTasks() { return currentController.getLowTasks(); }
 }

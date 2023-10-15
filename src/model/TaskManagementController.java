@@ -3,18 +3,14 @@ package model;
 import structure.HashTable.HashTableChaining;
 import structure.Nodes.HashNode;
 import structure.Nodes.Node;
-import structure.Queue.Entry;
 import structure.Queue.PriorityQueue;
 import structure.Queue.Queue;
 
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
 public class TaskManagementController implements Cloneable{
     private HashTableChaining<String,Activity> hashTableChaining;
-    private ArrayList<String> keys;
     private PriorityQueue<Activity> priorityQueueLow;
     private PriorityQueue<Activity> priorityQueueMedium;
     private PriorityQueue<Activity> priorityQueueHigh;
@@ -30,43 +26,102 @@ public class TaskManagementController implements Cloneable{
         priorityQueueHigh = new PriorityQueue<>();
         taskQueue = new Queue<>();
         reminderQueue = new Queue<>();
-        keys = new ArrayList<>();
         action = "";
     }
 
+    // Getter
     public Node<Activity> getTaskQueue() {
         return taskQueue.peekNode();
     }
     public Node<Activity> getReminderQueue() {
         return reminderQueue.peekNode();
     }
-    public List<Entry<Activity>> getHighTasks(){
+    public List<Activity> getHighTasks(){
         return priorityQueueHigh.getHeap();
     }
-    public List<Entry<Activity>> getMediumTasks(){
+    public List<Activity> getMediumTasks(){
         return priorityQueueMedium.getHeap();
     }
-    public List<Entry<Activity>> getLowTasks(){
+    public List<Activity> getLowTasks(){
         return priorityQueueLow.getHeap();
     }
 
-    public String addActivity(Activity newAct){
-        String code=keyCreator();
-        hashTableChaining.add(code,newAct);
-        keys.add(code);
+    // Add, edit and remove
+    private void addActivity(String key, Activity newAct){
+        hashTableChaining.add(key,newAct);
         if(newAct instanceof Task){
             Task task = (Task) newAct;
             if(task.isPriority()){
-                priorityQueueAdd(task,task.getPriorityLevel());
+                priorityQueueAdd(task);
             } else {
                 taskQueue.offer(newAct);
             }
         } else {
             reminderQueue.offer(newAct);
         }
-        return "Your activity was added with the key: " + code;
     }
 
+    public String addActivity(Activity newAct){
+        String key = keyCreator();
+        addActivity(key, newAct);
+        return "Your activity was added with the key: " + key;
+    }
+
+    public String editActivity(Activity newAct, String key) {
+        Activity existingActivity = hashTableChaining.get(key);
+
+        if (existingActivity == null) {
+            return "Activity not found with key: " + key;
+        }
+
+        existingActivity.setTittle(newAct.getTittle());
+        existingActivity.setDescription(newAct.getDescription());
+        existingActivity.setDate(newAct.getDate());
+
+        if (existingActivity instanceof Task) {
+            Task existingTask = (Task) existingActivity;
+            if (existingTask.isPriority()) {
+                if (existingTask.getPriorityLevel() == PriorityLevel.LOW) {
+                    priorityQueueLow.remove(existingTask);
+                } else if (existingTask.getPriorityLevel() == PriorityLevel.MEDIUM) {
+                    priorityQueueMedium.remove(existingTask);
+                } else {
+                    priorityQueueHigh.remove(existingTask);
+                }
+
+                priorityQueueAdd(existingTask);
+            }
+        }
+
+        return "Your activity has been successfully modified";
+    }
+
+
+    public String removeActivity(String key){
+        remove(key);
+        hashTableChaining.remove(key);
+        return "Your activity has been successfully removed";
+    }
+
+    public void remove(String key) {
+        Activity act = hashTableChaining.get(key);
+        if (act instanceof Task) {
+            Task task = (Task) act;
+            if (task.getPriorityLevel() == PriorityLevel.NON_PRIORITY) {
+                taskQueue.remove(act);
+            } else if (task.getPriorityLevel() == PriorityLevel.LOW) {
+                priorityQueueLow.remove(act);
+            } else if (task.getPriorityLevel() == PriorityLevel.MEDIUM) {
+                priorityQueueMedium.remove(act);
+            } else {
+                priorityQueueHigh.remove(act);
+            }
+        } else {
+            reminderQueue.remove(act);
+        }
+    }
+
+    // Auxiliary methods
     public String keyCreator(){
         String validCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         Random random = new Random();
@@ -77,7 +132,7 @@ public class TaskManagementController implements Cloneable{
             generatedCode.append(randomCharacter);
         }
         String code = generatedCode.toString();
-        if(!keys.contains(code)){
+        if(!hashTableChaining.containsKey(code)){
             return code;
         } else {
             keyCreator();
@@ -85,85 +140,91 @@ public class TaskManagementController implements Cloneable{
         return code;
     }
 
-    public void priorityQueueAdd(Task task, PriorityLevel priorityLevel){
-        long priority=calculatePriority(task.getDate());
-        if(priorityLevel==PriorityLevel.HIGH){
-            priorityQueueHigh.enqueue(task,priority);
-        }else if(priorityLevel==PriorityLevel.MEDIUM){
-            priorityQueueMedium.enqueue(task,priority);
+    public void priorityQueueAdd(Task task){
+        PriorityLevel pl = task.getPriorityLevel();
+        if(pl ==PriorityLevel.HIGH){
+            priorityQueueHigh.enqueue(task);
+        }else if(pl == PriorityLevel.MEDIUM){
+            priorityQueueMedium.enqueue(task);
         }else{
-            priorityQueueLow.enqueue(task,priority);
+            priorityQueueLow.enqueue(task);
         }
     }
 
-    public long calculatePriority(Calendar date){
-        Calendar now = Calendar.getInstance();
-        return (date.getTimeInMillis() - now.getTimeInMillis()) / 1000;
-    }
-
-    public void exist(){
-        System.out.println("\n\n\n");
-        for(String k:keys){
-            System.out.println(hashTableChaining.get(k));
+    public String getKey(Activity act){
+        HashNode<String, Activity>[] array = hashTableChaining.getArray();
+        for (int i = 0; i < array.length; i++) {
+            if(array[i]!=null){
+                HashNode<String, Activity> current = array[i];
+                while (current!=null){
+                    if(current.getValue() == act){
+                        return current.getKey();
+                    }
+                    current = current.getNext();
+                }
+            }
         }
-    }
-
-    public String editActivity(Activity act, Activity newAct) {
-        return "";
-    }
-
-    public String removeActivity(Activity act) {
-        return "";
+        return null;
     }
 
     @Override
     public TaskManagementController clone() {
         TaskManagementController clon = new TaskManagementController(10);
         clon.hashTableChaining = this.hashTableChaining.clone();
-        clon.keys = new ArrayList<>(this.keys);
 
         HashNode<String, Activity>[] array = clon.hashTableChaining.getArray();
         for (int i = 0; i < array.length; i++) {
             if (array[i] != null) {
-                do {
-                    array[i].setValue(array[i].getValue().clone());
-                    Activity act = array[i].getValue();
-                    if(act instanceof Task){
-                        if(((Task) act).getPriorityLevel()==PriorityLevel.NON_PRIORITY){
-                            clon.taskQueue.offer(act);
-                        } else if(((Task) act).getPriorityLevel()==PriorityLevel.LOW){
-                            clon.priorityQueueLow.enqueue(act, calculatePriority(act.getDate()));
+                HashNode<String, Activity> current = array[i];
+                while (current!=null) {
+                    Activity act = current.getValue();
+                    if(act instanceof Task&&((Task) act).isPriority()){
+                        current.setValue(current.getValue().clone());
+                        act = current.getValue();
+                        if(((Task) act).getPriorityLevel()==PriorityLevel.LOW){
+                            clon.priorityQueueLow.enqueue(act);
                         } else if(((Task) act).getPriorityLevel()==PriorityLevel.MEDIUM){
-                            clon.priorityQueueMedium.enqueue(act, calculatePriority(act.getDate()));
+                            clon.priorityQueueMedium.enqueue(act);
                         } else {
-                            clon.priorityQueueHigh.enqueue(act, calculatePriority(act.getDate()));
+                            clon.priorityQueueHigh.enqueue(act);
                         }
-                    } else {
-                        clon.reminderQueue.offer(act);
                     }
-                } while(array[i].getNext()!=null);
+                    current = current.getNext();
+                }
             }
         }
+        cloneReminderQueue(clon);
+        cloneNoPriorityTaskQueue(clon);
         return clon;
     }
-
-    public String getAction() {
-        return action;
+    private void cloneReminderQueue(TaskManagementController clon){
+        clon.reminderQueue.clone();
+        Node<Activity> currentNode= reminderQueue.peekNode();
+        while(currentNode!=null){
+            Activity act = currentNode.getData();
+            act.clone();
+            clon.hashTableChaining.set(getKey(act),act);
+            clon.reminderQueue.offer(act);
+            currentNode=currentNode.getNext();
+        }
     }
-
+    private void cloneNoPriorityTaskQueue(TaskManagementController clon){
+        clon.taskQueue.clone();
+        Node<Activity> currentNode= taskQueue.peekNode();
+        while(currentNode!=null){
+            Activity act = currentNode.getData();
+            act.clone();
+            clon.hashTableChaining.set(getKey(act),act);
+            clon.taskQueue.offer(act);
+            currentNode=currentNode.getNext();
+        }
+    }
     public void setAction(String action) {
         this.action = action;
     }
-
-    public void setSomething(String newTitle){
-        Activity activity = hashTableChaining.get(keys.get(0));
-        activity.setTittle(newTitle);
-    }
-
     public Activity getSomething(){
-        return hashTableChaining.get(keys.get(0));
+        return hashTableChaining.get(hashTableChaining.getAllKeys().get(0));
     }
-
     public PriorityQueue<Activity> getPriorityQueueHigh() {
         return priorityQueueHigh;
     }
