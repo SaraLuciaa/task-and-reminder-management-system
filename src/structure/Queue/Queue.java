@@ -98,11 +98,38 @@ public class Queue<E> implements IQueue<E>, Cloneable{
             current = current.getNext();
         }
     }
+    public void set(E element){
+        Node<E> current = this.front;
+        while (current != null) {
+            if(current.getData()==element){
+                current.setData(element);
+            }
+            current=current.getNext();
+        }
+    }
 
     @Override
     public Queue<E> clone() {
         try {
-            Queue clone = (Queue) super.clone();
+            Queue<E> clone = (Queue<E>) super.clone();
+
+            clone.front = clone.back = null;
+            Node<E> current = this.front;
+            Node<E> prevCloneNode = null;
+
+            while (current != null) {
+                Node<E> clonedNode = current.clone();
+                if (clone.front == null) {
+                    clone.front = clonedNode;
+                } else {
+                    prevCloneNode.setNext(clonedNode);
+                }
+                clone.back = clonedNode;
+
+                prevCloneNode = clonedNode;
+                current = current.getNext();
+            }
+
             return clone;
         } catch (CloneNotSupportedException e) {
             throw new AssertionError();

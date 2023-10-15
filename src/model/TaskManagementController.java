@@ -68,12 +68,31 @@ public class TaskManagementController implements Cloneable{
     }
 
     public String editActivity(Activity newAct, String key) {
-        remove(key);
-        hashTableChaining.remove(key);
-        addActivity(key, newAct);
+        if(newAct instanceof Task&&((Task) newAct ).isPriority()) {
+            remove(key);
+            hashTableChaining.remove(key);
+            addActivity(key, newAct);
+        }else{
+            editActivityQueue(newAct);
+        }
         return "Your activity has been successfully modified";
     }
-
+    public void editActivityQueue(Activity newAct){
+        Node<Activity> currentNode=null;
+        if(newAct instanceof Reminder){
+            reminderQueue.set(newAct);
+            currentNode= reminderQueue.peekNode();
+        }else{
+            taskQueue.set(newAct);
+            currentNode= taskQueue.peekNode();
+        }
+        while(currentNode!=null){
+            if(getKey(currentNode.getData())==getKey(newAct))
+            Activity act = currentNode.getData();
+            hashTableChaining.set(getKey(act),act);
+            currentNode=currentNode.getNext();
+        }
+    }
     public String removeActivity(String key){
         remove(key);
         hashTableChaining.remove(key);
@@ -82,19 +101,13 @@ public class TaskManagementController implements Cloneable{
 
     public void remove(String key) {
         Activity act = hashTableChaining.get(key);
-        if(act instanceof Task){
-            Task task = (Task) act;
-            if(task.getPriorityLevel()==PriorityLevel.NON_PRIORITY){
-                taskQueue.remove(act);
-            } else if(task.getPriorityLevel()==PriorityLevel.LOW){
-                priorityQueueLow.remove(act);
-            } else if(((Task) act).getPriorityLevel()==PriorityLevel.MEDIUM){
-                priorityQueueMedium.remove(act);
-            } else {
-                priorityQueueHigh.remove(act);
-            }
-        } else {
-            reminderQueue.remove(act);
+        Task task = (Task) act;
+        if(task.getPriorityLevel()==PriorityLevel.NON_PRIORITY){
+            taskQueue.remove(act);
+        } else if(task.getPriorityLevel()==PriorityLevel.LOW){
+            priorityQueueLow.remove(act);
+        } else if(((Task) act).getPriorityLevel()==PriorityLevel.MEDIUM){
+            priorityQueueMedium.remove(act);
         }
     }
 
@@ -154,26 +167,47 @@ public class TaskManagementController implements Cloneable{
             if (array[i] != null) {
                 HashNode<String, Activity> current = array[i];
                 while (current!=null) {
-                    current.setValue(current.getValue().clone());
                     Activity act = current.getValue();
-                    if(act instanceof Task){
-                        if(((Task) act).getPriorityLevel()==PriorityLevel.NON_PRIORITY){
-                            clon.taskQueue.offer(act);
-                        } else if(((Task) act).getPriorityLevel()==PriorityLevel.LOW){
+                    if(act instanceof Task&&((Task) act).isPriority()){
+                        current.setValue(current.getValue().clone());
+                        act = current.getValue();
+                        if(((Task) act).getPriorityLevel()==PriorityLevel.LOW){
                             clon.priorityQueueLow.enqueue(act);
                         } else if(((Task) act).getPriorityLevel()==PriorityLevel.MEDIUM){
                             clon.priorityQueueMedium.enqueue(act);
                         } else {
                             clon.priorityQueueHigh.enqueue(act);
                         }
-                    } else {
-                        clon.reminderQueue.offer(act);
                     }
                     current = current.getNext();
                 }
             }
         }
+        cloneReminderQueue(clon);
+        cloneNoPriorityTaskQueue(clon);
         return clon;
+    }
+    private void cloneReminderQueue(TaskManagementController clon){
+        clon.reminderQueue.clone();
+        Node<Activity> currentNode= reminderQueue.peekNode();
+        while(currentNode!=null){
+            Activity act = currentNode.getData();
+            act.clone();
+            clon.hashTableChaining.set(getKey(act),act);
+            clon.reminderQueue.offer(act);
+            currentNode=currentNode.getNext();
+        }
+    }
+    private void cloneNoPriorityTaskQueue(TaskManagementController clon){
+        clon.taskQueue.clone();
+        Node<Activity> currentNode= taskQueue.peekNode();
+        while(currentNode!=null){
+            Activity act = currentNode.getData();
+            act.clone();
+            clon.hashTableChaining.set(getKey(act),act);
+            clon.taskQueue.offer(act);
+            currentNode=currentNode.getNext();
+        }
     }
     public void setAction(String action) {
         this.action = action;

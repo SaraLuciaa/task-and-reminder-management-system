@@ -50,17 +50,16 @@ public class HashTableChaining<K, V extends Cloneable> implements IHashTable<K, 
         return null;
     }
 
-    public V set(K key, V newValue) {
+    public void set(K key, V newValue) {
         int index = hash(key);
         HashNode<K, V> currentNode = array[index];
         while (currentNode != null) {
             if (currentNode.getKey().equals(key)) {
                 currentNode.setValue(newValue);
-                return currentNode.getValue();
+                currentNode.getValue();
             }
             currentNode = currentNode.getNext();
         }
-        return null;
     }
 
     @Override
@@ -75,7 +74,6 @@ public class HashTableChaining<K, V extends Cloneable> implements IHashTable<K, 
         }
         return false;
     }
-
     public ArrayList<K> getAllKeys() {
         ArrayList<K> keys = new ArrayList<>();
         for (int i = 0; i < size; i++) {
