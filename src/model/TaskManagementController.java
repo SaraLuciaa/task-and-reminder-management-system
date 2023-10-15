@@ -139,13 +139,6 @@ public class TaskManagementController implements Cloneable{
         return (date.getTimeInMillis() - now.getTimeInMillis()) / 1000;
     }
 
-    public void exist(){
-        System.out.println("\n\n\n");
-        for(String k:keys){
-            System.out.println(hashTableChaining.get(k));
-        }
-    }
-
     public String getKey(Activity act){
         HashNode<String, Activity>[] array = hashTableChaining.getArray();
         for (int i = 0; i < array.length; i++) {
@@ -194,24 +187,15 @@ public class TaskManagementController implements Cloneable{
         }
         return clon;
     }
-
     public String getAction() {
         return action;
     }
-
     public void setAction(String action) {
         this.action = action;
     }
-
-    public void setSomething(String newTitle){
-        Activity activity = hashTableChaining.get(keys.get(0));
-        activity.setTittle(newTitle);
-    }
-
     public Activity getSomething(){
         return hashTableChaining.get(keys.get(0));
     }
-
     public PriorityQueue<Activity> getPriorityQueueHigh() {
         return priorityQueueHigh;
     }

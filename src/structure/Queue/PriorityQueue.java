@@ -23,7 +23,7 @@ public class PriorityQueue<T> implements Cloneable{
 
     public T dequeue() {
         if (isEmpty()) {
-            throw new IllegalStateException("The priority queue is empty.");
+            return null;
         }
 
         Entry<T> top = heap.get(0);
@@ -39,7 +39,7 @@ public class PriorityQueue<T> implements Cloneable{
 
     public T peek() {
         if (isEmpty()) {
-            throw new IllegalStateException("The priority queue is empty.");
+            return null;
         }
         return heap.get(0).item;
     }
@@ -102,11 +102,12 @@ public class PriorityQueue<T> implements Cloneable{
                 break;
             }
         }
-
         if (index != -1) {
             heap.set(index, heap.get(size - 1));
             heap.remove(size - 1);
-            trickleDown(index);
+            if(index != size-1) {
+                trickleDown(index);
+            }
         }
     }
 

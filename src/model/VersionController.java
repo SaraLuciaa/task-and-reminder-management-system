@@ -32,7 +32,6 @@ public class VersionController{
     public String addActivity(String title, String description, Calendar date, Boolean isPriority, String priorityLevel){
         newController("Add task");
         int priorityL = -1;
-        System.out.println(priorityLevel);
         switch (priorityLevel){
             case "high" -> priorityL = 0;
             case "medium" -> priorityL = 1;
@@ -51,10 +50,8 @@ public class VersionController{
 
     public String editActivity(Activity act, String title, String description, Calendar date, Boolean isPriority, String priorityLevel){
         String key = currentController.getKey(act);
-        System.out.println(key);
         newController("Edit task");
         int priorityL = -1;
-        System.out.println(priorityLevel);
         switch (priorityLevel){
             case "high" -> priorityL = 0;
             case "medium" -> priorityL = 1;
@@ -67,7 +64,6 @@ public class VersionController{
 
     public String editActivity(Activity act, String title, String description, Calendar date){
         String key = currentController.getKey(act);
-        System.out.println(key);
         newController("Edit reminder");
         Reminder newAct = new Reminder(title,description,date);
         return currentController.editActivity(newAct, key);
@@ -75,19 +71,8 @@ public class VersionController{
 
     public void deleteActivity(Activity act){
         String key = currentController.getKey(act);
-        System.out.println(key);
         newController("Delete activity");
         currentController.removeActivity(key);
-    }
-
-    public void deleteActivity(){
-        newController("Delete element");
-    }
-    public void getSomething(){
-        currentController.getSomething();
-    }
-    public void exist(){
-        currentController.exist();
     }
 
     public TaskManagementController getCurrentController() {
