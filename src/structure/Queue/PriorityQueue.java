@@ -18,8 +18,50 @@ public class PriorityQueue<T> implements Cloneable{
         Entry<T> entry = new Entry<>(item, priority);
         heap.add(entry);
         int index = heap.size() - 1;
-        bubbleUp(index);
+        heapSort();
     }
+
+    public void heapSort() {
+        int n = heap.size();
+
+        for (int i = n / 2 - 1; i >= 0; i--) {
+            minHeapify(n, i);
+        }
+
+        List<Entry<T>> sortedList = new ArrayList<>();
+        for (int i = n - 1; i >= 0; i--) {
+            Entry<T> entry = heap.get(0);
+            sortedList.add(entry);
+            heap.set(0, heap.get(i));
+            minHeapify(i, 0);
+        }
+
+        heap.clear();
+        heap.addAll(sortedList);
+    }
+
+    private void minHeapify(int n, int i) {
+        int smallest = i;
+        int leftChild = 2 * i + 1;
+        int rightChild = 2 * i + 2;
+
+        if (leftChild < n && heap.get(leftChild).priority < heap.get(smallest).priority) {
+            smallest = leftChild;
+        }
+
+        if (rightChild < n && heap.get(rightChild).priority < heap.get(smallest).priority) {
+            smallest = rightChild;
+        }
+
+        if (smallest != i) {
+            Entry<T> temp = heap.get(i);
+            heap.set(i, heap.get(smallest));
+            heap.set(smallest, temp);
+
+            minHeapify(n, smallest);
+        }
+    }
+
 
     public T dequeue() {
         if (isEmpty()) {
@@ -46,20 +88,6 @@ public class PriorityQueue<T> implements Cloneable{
 
     public int size() {
         return heap.size();
-    }
-
-    private void bubbleUp(int index) {
-        Entry<T> entry = heap.get(index);
-        while (index > 0) {
-            int parentIndex = (index - 1) / 2;
-            Entry<T> parentEntry = heap.get(parentIndex);
-            if (entry.priority >= parentEntry.priority) {
-                break;
-            }
-            heap.set(index, parentEntry);
-            index = parentIndex;
-        }
-        heap.set(index, entry);
     }
 
     private void trickleDown(int index) {
